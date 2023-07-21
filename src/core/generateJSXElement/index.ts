@@ -1,0 +1,1 @@
+export { default as generateJSXElement } from './generateJSXElement';
