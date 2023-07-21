@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/sebastien-gervilla/sage-babel-plugin.git"
   },
-  "keywords": ["sage", "javascript", "babel"],
+  "keywords": [
+    "sage",
+    "javascript",
+    "babel"
+  ],
   "author": "sebastien-gervilla (Sébastien Gervilla)",
   "license": "ISC",
   "bugs": {
@@ -23,6 +27,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@babel/core": "^7.22.9"
+    "@babel/core": "^7.22.9",
+    "tslib": "^2.6.0"
   }
 }
