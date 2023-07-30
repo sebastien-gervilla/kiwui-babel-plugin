@@ -20,10 +20,10 @@ const generateJSXElement = (element: types.JSXElement): string => {
         transformedJSX += `(${tagName}, ${attributes}`;
     } else {
         const tagName = openingElement.name.name.toString();
-        if (isFirstCharacterUppercase(tagName))
-            return `${tagName}, ${attributes}`
+        const tag = isFirstCharacterUppercase(tagName) ?
+            `${tagName}` : `"${tagName}"`;
 
-        transformedJSX += `("${tagName}", ${attributes}`;
+        transformedJSX += `(${tag}, ${attributes}`;
     }
 
     const children = generateChildren(element.children);
