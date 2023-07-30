@@ -1,0 +1,1 @@
+export { default as mainPlugin } from './main.plugin';
