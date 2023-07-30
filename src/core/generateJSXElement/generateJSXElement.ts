@@ -21,7 +21,7 @@ const generateJSXElement = (element: types.JSXElement): string => {
     } else {
         const tagName = openingElement.name.name.toString();
         if (isFirstCharacterUppercase(tagName))
-            return `Button(${attributes})`
+            return `${tagName}, ${attributes}`
 
         transformedJSX += `("${tagName}", ${attributes}`;
     }
