@@ -9,23 +9,26 @@ const {
 
 const generateAttributes = (attributes: (types.JSXAttribute | types.JSXSpreadAttribute)[]): string => {
     if (!attributes.length) return 'null';
-    const attributeObjects: string[] = [];
+    let stringAttributes: string[] = [];
   
-    for (const attr of attributes) {
-        if (isJSXSpreadAttribute(attr)) {
+    for (const attribute of attributes) {
+        if (isJSXSpreadAttribute(attribute)) {
             // Handle spread attributes
-            const spreadAttribute = generateSpreadAttribute(attr);
-            attributeObjects.push(spreadAttribute);
-        } else if (isJSXAttribute(attr)) {
+            const spreadAttribute = generateSpreadAttribute(attribute);
+            stringAttributes.push(spreadAttribute);
+            continue;
+        }
+        
+        if (isJSXAttribute(attribute)) {
             // Handle regular attributes
-            const { name, value } = attr;
+            const { name, value } = attribute;
             const attributeName = isJSXIdentifier(name) ? name.name : name.namespace.name + ':' + name.name.name;
             const attributeValue = generateAttributeValue(value);
-            attributeObjects.push(`"${attributeName}": ${attributeValue}`);
+            stringAttributes.push(`"${attributeName}": ${attributeValue}`);
         }
     }
   
-    return `{ ${attributeObjects.join(', ')} }`;
+    return `{ ${stringAttributes.join(', ')} }`;
 }
 
 export default generateAttributes;
