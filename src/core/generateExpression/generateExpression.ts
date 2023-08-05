@@ -170,6 +170,9 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     }
 
     if (isMemberExpression(expression)) {
+        if (isIdentifier(expression.object) && isIdentifier(expression.property) && expression.property.name === 'index') {
+            return `${expression.object.name}[${expression.property.name}]`;
+        }
         return generateMemberExpression(expression);
     }
 
