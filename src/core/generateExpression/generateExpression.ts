@@ -1,4 +1,5 @@
 import { types } from "@babel/core";
+import { generateJSXElement } from "..";
 
 const {
     isJSXEmptyExpression,
@@ -33,7 +34,8 @@ const {
     isArrayPattern,
     isRestElement,
     isForStatement,
-    isUpdateExpression
+    isUpdateExpression,
+    isJSXElement
 } = types;
 
 
@@ -41,6 +43,10 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     if (isJSXEmptyExpression(expression)) {
         // Handle JSXEmptyExpression (e.g., <Component />)
         return '';
+    }
+
+    if (isJSXElement(expression)){
+        return generateJSXElement(expression)
     }
 
     // console.log("===============================================");
