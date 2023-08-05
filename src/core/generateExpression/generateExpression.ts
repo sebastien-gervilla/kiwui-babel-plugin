@@ -35,7 +35,8 @@ const {
     isRestElement,
     isForStatement,
     isUpdateExpression,
-    isJSXElement
+    isJSXElement,
+    isNullLiteral
 } = types;
 
 
@@ -57,6 +58,10 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
         // Traitez le PrivateName comme vous le souhaitez, par exemple, ignorez-le ou renvoyez une chaîne vide
         console.log("isPrivateName")
         return '';
+    }
+
+    if (isNullLiteral(expression)){
+        return 'null';
     }
 
 
