@@ -36,7 +36,8 @@ const {
     isForStatement,
     isUpdateExpression,
     isJSXElement,
-    isNullLiteral
+    isNullLiteral,
+    isUnaryExpression
 } = types;
 
 
@@ -167,6 +168,11 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
                 .join(', ');
             return `${callee}(${args})`;
         }
+    }
+
+    if (isUnaryExpression(expression)) {
+        const argument = generateExpression(expression.argument);
+        return `${expression.operator}${argument}`;
     }
 
     if (isMemberExpression(expression)) {
