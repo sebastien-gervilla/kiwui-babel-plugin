@@ -7,6 +7,7 @@ import { generateCallExpression } from "./generateCallExpression";
 import { generateMemberExpression } from "./generateMemberExpression";
 import { generateDoWhileStatement, generateForOfStatement, generateForStatement, generateIfStatement, generateStatement, generateWhileStatement } from "./generateStatement";
 import { generateObjectExpression } from "./generateObjectExpression";
+import { generateBinaryExpression } from "./generateBinaryExpression";
 
 const {
     isJSXEmptyExpression,
@@ -153,29 +154,11 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     }
 
     if (isBinaryExpression(expression)) {
-        let left = '';
-        if (isExpression(expression.left)) {
-            left = generateExpression(expression.left);
-        } else {
-            console.log("isBinaryExpression")
-            console.log(expression.left)
-        }
-    
-        const right = generateExpression(expression.right);
-        return `${left} ${expression.operator} ${right}`;
+        return generateBinaryExpression(expression);
     }
 
     if (isLogicalExpression(expression)) {
-        let left = '';
-        if (isExpression(expression.left)) {
-            left = generateExpression(expression.left);
-        } else {
-            console.log("isLogicalExpression")
-            console.log(expression.left)
-        }
-    
-        const right = generateExpression(expression.right);
-        return `${left} ${expression.operator} ${right}`;
+        return generateBinaryExpression(expression);
     }
 
     if (isUpdateExpression(expression)) {
@@ -217,8 +200,6 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     throw new Error("Expression not supported");
 }
 
-const generateStatements = () => {
 
-}
 
 export default generateExpression;
