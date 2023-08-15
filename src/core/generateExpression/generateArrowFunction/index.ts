@@ -1,0 +1,1 @@
+export { generateArrowFunction } from './generateArrowFunction';

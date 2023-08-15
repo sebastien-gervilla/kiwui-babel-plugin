@@ -1,0 +1,1 @@
+export { generateArrayPatternElements } from './generateArrayPatternElement';
