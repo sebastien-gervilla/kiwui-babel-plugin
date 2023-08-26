@@ -49,7 +49,7 @@ const {
 } = types;
 
 
-const generateExpression = (expression: types.Expression | types.JSXEmptyExpression | types.BlockStatement | types.Statement | types.Node): string => {
+const generateExpression = (expression: types.Expression | types.JSXEmptyExpression | types.BlockStatement | types.Statement | types.Node, parentPrecedence: number = 0): string => {
     if (isJSXEmptyExpression(expression)) {
         // Handle JSXEmptyExpression (e.g., <Component />)
         return '';
@@ -64,7 +64,6 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     // console.log("===============================================");
 
     if (isPrivateName(expression)) {
-        console.log("isPrivateName")
         return '';
     }
 
@@ -86,7 +85,6 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     }
 
     if (isArgumentPlaceholder(expression)) {
-        console.log("isArgumentPlaceholder")
         return '';  // Ignore ArgumentPlaceholder
     }
 
@@ -134,8 +132,8 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
         return generateMemberExpression(expression);
     }
 
-    if (isIdentifier(expression)){
-        return `${expression.name}`;
+    if (isIdentifier(expression)) {
+        return expression.name;
     }
 
     if (isStringLiteral(expression)){
@@ -153,12 +151,8 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
         return '';
     }
 
-    if (isBinaryExpression(expression)) {
-        return generateBinaryExpression(expression);
-    }
-
-    if (isLogicalExpression(expression)) {
-        return generateBinaryExpression(expression);
+    if (isBinaryExpression(expression) || isLogicalExpression(expression)) {
+        return generateBinaryExpression(expression, parentPrecedence);
     }
 
     if (isUpdateExpression(expression)) {
@@ -195,7 +189,6 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
         return generateDoWhileStatement(expression);
     }
 
-    console.log(expression)
     // Handle other JSX expressions
     throw new Error("Expression not supported");
 }

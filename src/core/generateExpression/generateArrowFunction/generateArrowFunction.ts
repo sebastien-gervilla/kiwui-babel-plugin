@@ -3,7 +3,8 @@ import generateExpression from "../generateExpression";
 
 const {
     isIdentifier,
-    isBlockStatement
+    isBlockStatement,
+    isReturnStatement
 } = types
 
 export const generateArrowFunction = (expression : types.ArrowFunctionExpression) => {
@@ -29,5 +30,15 @@ const generateBlockStatement = (block: types.BlockStatement, wrapWithBraces: boo
 }
 
 const generateStatement = (statement: types.Statement): string => {
+
+    if (isReturnStatement(statement)) {
+        if (statement.argument !== null && statement.argument !== undefined) {
+            const argument = generateExpression(statement.argument);
+            return `return ${argument};`;
+        } else {
+            return 'return;';
+        }
+    }
+
     return generateExpression(statement); 
 }

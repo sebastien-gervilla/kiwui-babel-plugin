@@ -26,7 +26,7 @@ const generateAttributeValue = (value: types.JSXAttribute['value']): string => {
     }
   
     // Handle literal values (e.g., strings, numbers, booleans)
-    console.log('attributes: ', value)
+    // console.log('attributes: ', value)
     return isStringLiteral(value) ? `"${value.value}"` : `"${value}"`;
 }
 

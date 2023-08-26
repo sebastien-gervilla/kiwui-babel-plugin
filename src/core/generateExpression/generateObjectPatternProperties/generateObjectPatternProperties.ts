@@ -6,7 +6,8 @@ const {
     isObjectProperty,
     isStringLiteral,
     isRestElement,
-    isIdentifier
+    isIdentifier,
+    isExpression
 } = types
 
 export const generateObjectPatternProperties = (pattern: types.ObjectPattern): string => {
@@ -29,7 +30,8 @@ export const generateObjectPatternProperties = (pattern: types.ObjectPattern): s
                 // }
                 return '';
             } else if (isObjectProperty(prop)) {
-                if (isIdentifier(prop.key) || isStringLiteral(prop.key)) {
+                if ((isIdentifier(prop.key) || isStringLiteral(prop.key)) &&
+                    (isIdentifier(prop.value) || isExpression(prop.value))) {
                     const key = isIdentifier(prop.key) ? prop.key.name : prop.key.value;
                     const value = generateExpression(prop.value as types.Expression);
                     return `${key}: ${value}`;
