@@ -5,9 +5,10 @@ import { generateAssignementExpression } from "./generateAssignementExpression";
 import { generateVariableDeclaration } from "./generateVariableDeclaration";
 import { generateCallExpression } from "./generateCallExpression";
 import { generateMemberExpression } from "./generateMemberExpression";
-import { generateDoWhileStatement, generateForOfStatement, generateForStatement, generateIfStatement, generateStatement, generateWhileStatement } from "./generateStatement";
+import { generateCatchClause, generateDoWhileStatement, generateForInStatement, generateForOfStatement, generateForStatement, generateIfStatement, generateStatement, generateThrowStatement, generateTryStatement, generateWhileStatement } from "./generateStatement";
 import { generateObjectExpression } from "./generateObjectExpression";
 import { generateBinaryExpression } from "./generateBinaryExpression";
+import { generateAwaitExpression } from "./generateAwaitExpression";
 
 const {
     isJSXEmptyExpression,
@@ -47,7 +48,13 @@ const {
     isNullLiteral,
     isUnaryExpression,
     isBreakStatement,
-    isContinueStatement
+    isContinueStatement,
+    isAwaitExpression,
+    isTryStatement,
+    isCatchClause,
+    isThrowStatement,
+    isNewExpression,
+    isForInStatement
 } = types;
 
 
@@ -167,6 +174,10 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
         }
     }
 
+    if (isTryStatement(expression)){
+        return generateTryStatement(expression)
+    }
+
     if (isObjectExpression(expression)) {
         return generateObjectExpression(expression)
     }
@@ -199,10 +210,27 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
         return "continue;"
     }
 
+    if (isAwaitExpression(expression)){
+        return generateAwaitExpression(expression);
+    }
+
+    if (isThrowStatement(expression)){
+        return generateThrowStatement(expression)
+    }
+
+    if (isNewExpression(expression)) {
+        const callee = generateExpression(expression.callee);
+        const argumentsList = expression.arguments.map(arg => generateExpression(arg)).join(', ');
+        return `new ${callee}(${argumentsList})`;
+    }
+
+    if (isForInStatement(expression)) {
+        return generateForInStatement(expression);
+    }
+
     // Handle other JSX expressions
     throw new Error("Expression not supported");
 }
-
 
 
 export default generateExpression;
