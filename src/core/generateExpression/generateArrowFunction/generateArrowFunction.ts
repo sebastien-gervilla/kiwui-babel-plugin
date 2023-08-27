@@ -2,44 +2,53 @@ import { types } from "@babel/core";
 import generateExpression from "../generateExpression";
 import { generateArrayPatternElements } from "../generateArrayPatternElement";
 import { generateObjectPatternProperties } from "../generateObjectPatternProperties";
+import { generatePattern } from "../generatePattern";
+import { generateFunctionDeclaration } from "../generateFunctionDeclaration";
+import { generateFunctionExpression } from "../generateFunctionExpression";
 
 const {
     isIdentifier,
     isBlockStatement,
     isReturnStatement,
     isObjectPattern,
-    isArrayPattern
+    isArrayPattern,
+    isFunctionDeclaration,
+    isFunctionExpression,
+    isArrowFunctionExpression
 } = types
 
 export const generateArrowFunction = (expression: types.ArrowFunctionExpression): string => {
-    const params = expression.params.map(param => {
-        if (isIdentifier(param)) {
-            return param.name;
-        } else if (isObjectPattern(param)) {
-            return `{ ${generateObjectPatternProperties(param)} }`;
-        } else if (isArrayPattern(param)) {
-            return `[ ${generateArrayPatternElements(param)} ]`;
-        } else {
-            return '';
-        }
-    }).filter(Boolean).join(', ');
+    const params = expression.params.map(param => generatePattern(param)).join(', ');
 
     const isAsync = expression.async ? "async " : ""; // Ajoutez "async" si la fonction est asynchrone
-
-    const body = isBlockStatement(expression.body)
-        ? generateBlockStatement(expression.body) 
-        : expression.body
-            ? generateExpression(expression.body)
-            : '{ }'; 
+    // console.log(expression)
+    const body = generateArrowFunctionBody(expression.body);
 
     return params ? `${isAsync}(${params}) => ${body}` : `${isAsync}() => ${body}`;
 };
-
 
 const generateBlockStatement = (block: types.BlockStatement, wrapWithBraces: boolean = true): string => {
     const statements = block.body.map(stmt => generateStatement(stmt)).join('\n');
     return wrapWithBraces ? `{\n${statements}\n}` : statements;
 }
+
+
+const generateArrowFunctionBody = (body: types.Expression | types.Statement | types.BlockStatement | types.FunctionDeclaration | types.FunctionExpression): string => {
+    if (isBlockStatement(body)) {
+        return generateBlockStatement(body);
+    } else if (isFunctionDeclaration(body)) {
+        return generateFunctionDeclaration(body);
+    } else if (isFunctionExpression(body)) {
+        return generateFunctionExpression(body);
+    } else if (isArrowFunctionExpression(body)) {
+        return generateArrowFunction(body);
+    } else {
+        return generateExpression(body);
+    }
+};
+
+// () => function zouz(){}
+// () => { function zouz(){} }
 
 const generateStatement = (statement: types.Statement): string => {
 
