@@ -1,18 +1,27 @@
 import { types } from "@babel/core";
 import generateExpression from "../generateExpression";
+import { generateArrayPatternElements } from "../generateArrayPatternElement";
+import { generateObjectPatternProperties } from "../generateObjectPatternProperties";
 
 const {
     isIdentifier,
     isBlockStatement,
-    isReturnStatement
+    isReturnStatement,
+    isObjectPattern,
+    isArrayPattern
 } = types
 
 export const generateArrowFunction = (expression : types.ArrowFunctionExpression) => {
     const params = expression.params.map(param => {
         if (isIdentifier(param)) {
             return param.name;
+        } else if (isObjectPattern(param)) {
+            return `{ ${generateObjectPatternProperties(param)} }`;
+        } else if (isArrayPattern(param)) {
+            return `[ ${generateArrayPatternElements(param)} ]`;
+        } else {
+            return '';
         }
-        return '';
     }).filter(Boolean).join(', ');
 
     const body = isBlockStatement(expression.body)
@@ -23,6 +32,7 @@ export const generateArrowFunction = (expression : types.ArrowFunctionExpression
 
     return params ? `(${params}) => ${body}` : `() => ${body}`;
 }
+
 
 const generateBlockStatement = (block: types.BlockStatement, wrapWithBraces: boolean = true): string => {
     const statements = block.body.map(stmt => generateStatement(stmt)).join('\n');
