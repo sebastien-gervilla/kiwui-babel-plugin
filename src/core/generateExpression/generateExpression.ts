@@ -45,7 +45,9 @@ const {
     isUpdateExpression,
     isJSXElement,
     isNullLiteral,
-    isUnaryExpression
+    isUnaryExpression,
+    isBreakStatement,
+    isContinueStatement
 } = types;
 
 
@@ -187,6 +189,14 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
 
     if (isDoWhileStatement(expression)) {
         return generateDoWhileStatement(expression);
+    }
+
+    if (isBreakStatement(expression)){
+        return "break;"
+    }
+
+    if (isContinueStatement(expression)){
+        return "continue;"
     }
 
     // Handle other JSX expressions
