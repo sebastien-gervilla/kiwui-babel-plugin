@@ -21,15 +21,15 @@ export const generateVariableDeclaration = (expression: types.VariableDeclaratio
                     const declarationType = expression.kind || 'const'; // Default to 'const' if no kind is provided
                     if (isObjectPattern(declaration.id)) {
                         const properties = generateObjectPatternProperties(declaration.id);
-                        const initValue = declaration.init && isExpression(declaration.init) ? generateExpression(declaration.init) : '';
-                        return `${declarationType} { ${properties} } = ${initValue}`;
+                        const initValue = declaration.init && isExpression(declaration.init) ? ` = ${generateExpression(declaration.init)}` : '';
+                        return `${declarationType} { ${properties} }${initValue}`;
                     } else if (isArrayPattern(declaration.id)) {
                         const elements = generateArrayPatternElements(declaration.id);
-                        const initValue = declaration.init && isExpression(declaration.init) ? generateExpression(declaration.init) : '';
-                        return `${declarationType} [${elements}] = ${initValue}`;
+                        const initValue = declaration.init && isExpression(declaration.init) ? ` = ${generateExpression(declaration.init)}` : '';
+                        return `${declarationType} [${elements}]${initValue}`;
                     } else if (isIdentifier(declaration.id)) {
-                        const initValue = declaration.init && isExpression(declaration.init) ? generateExpression(declaration.init) : '';
-                        return `${declarationType} ${declaration.id.name} = ${initValue}`;
+                        const initValue = declaration.init && isExpression(declaration.init) ? ` = ${generateExpression(declaration.init)}` : '';
+                        return `${declarationType} ${declaration.id.name}${initValue}`;
                     }
                 }
                 return '';
