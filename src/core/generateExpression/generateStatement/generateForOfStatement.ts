@@ -3,7 +3,6 @@ import generateExpression from "../generateExpression";
 import { generateStatement } from "./generateStatement";
 import { generateVariableDeclaration } from "../generateVariableDeclaration";
 
-
 const {
     isExpression,
     isVariableDeclaration
@@ -17,10 +16,7 @@ export const generateForOfStatement = (expression: types.ForOfStatement): string
         if (isVariableDeclaration(expression.left)){
             left = generateVariableDeclaration(expression.left)
         }
-    
-        console.log("isForOfStatement")
-        console.log(expression.left)
-        // Traitez les cas où expression.left n'est pas une expression valide
+        throw new Error(`ForOf , left Operator not supported ${expression.left}`)
     }
     const right = generateExpression(expression.right);
     const body = generateStatement(expression.body);

@@ -1,16 +1,5 @@
 import { types } from "@babel/core";
 import generateExpression from "../generateExpression";
-import { generateVariableDeclaration } from "../generateVariableDeclaration";
-
-const {
-    isExpression,
-    isVariableDeclaration,
-    isNumericLiteral,
-    isStringLiteral,
-    isMemberExpression,
-    isIdentifier
-} = types
-
 
 export const generateAssignementExpression = (expression : types.AssignmentExpression ) => {
     

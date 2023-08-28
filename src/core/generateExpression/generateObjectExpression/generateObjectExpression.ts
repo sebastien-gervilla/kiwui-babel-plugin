@@ -19,7 +19,7 @@ export const generateObjectExpression = (expression : types.ObjectExpression) =>
                 if (isExpression(prop.value)) {
                     value = generateExpression(prop.value);
                 } else {
-                    // Traitez les cas où prop.value n'est pas une expression valide
+                    throw new Error("ObjetExpression not supported")
                 }
                 return `${key}: ${value}`;
             }

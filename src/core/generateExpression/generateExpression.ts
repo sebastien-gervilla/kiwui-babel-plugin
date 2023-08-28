@@ -5,10 +5,12 @@ import { generateAssignementExpression } from "./generateAssignementExpression";
 import { generateVariableDeclaration } from "./generateVariableDeclaration";
 import { generateCallExpression } from "./generateCallExpression";
 import { generateMemberExpression } from "./generateMemberExpression";
-import { generateCatchClause, generateDoWhileStatement, generateForInStatement, generateForOfStatement, generateForStatement, generateIfStatement, generateStatement, generateThrowStatement, generateTryStatement, generateWhileStatement } from "./generateStatement";
+import { generateDoWhileStatement, generateForInStatement, generateForOfStatement, generateForStatement, generateIfStatement, generateStatement, generateThrowStatement, generateTryStatement, generateWhileStatement } from "./generateStatement";
 import { generateObjectExpression } from "./generateObjectExpression";
 import { generateBinaryExpression } from "./generateBinaryExpression";
 import { generateAwaitExpression } from "./generateAwaitExpression";
+import { generateFunctionDeclaration } from "./generateFunctionDeclaration";
+import { generateFunctionExpression } from "./generateFunctionExpression";
 
 const {
     isJSXEmptyExpression,
@@ -21,9 +23,7 @@ const {
     isArgumentPlaceholder,
     isMemberExpression,
     isSpreadElement,
-    isJSXNamespacedName,
     isObjectExpression,
-    isExpression,
     isPrivateName,
     isAssignmentExpression,
     isBinaryExpression,
@@ -31,17 +31,12 @@ const {
     isArrayExpression,
     isLogicalExpression,
     isBooleanLiteral,
-    isObjectProperty,
     isConditionalExpression,
     isIfStatement,
     isWhileStatement,
     isDoWhileStatement,
     isForOfStatement,
-    isVariableDeclarator,
     isVariableDeclaration,
-    isObjectPattern,
-    isArrayPattern,
-    isRestElement,
     isForStatement,
     isUpdateExpression,
     isJSXElement,
@@ -51,10 +46,11 @@ const {
     isContinueStatement,
     isAwaitExpression,
     isTryStatement,
-    isCatchClause,
     isThrowStatement,
     isNewExpression,
-    isForInStatement
+    isForInStatement,
+    isFunctionDeclaration,
+    isFunctionExpression
 } = types;
 
 
@@ -67,10 +63,6 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
     if (isJSXElement(expression)){
         return generateJSXElement(expression)
     }
-
-    // console.log("===============================================");
-    // console.log("generated : ", expression);
-    // console.log("===============================================");
 
     if (isPrivateName(expression)) {
         return '';
@@ -104,7 +96,7 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
 
     if (isArrayExpression(expression)) {
         const elements = expression.elements
-            .filter(element => element !== null) // Ignorer les éléments null
+            .filter(element => element !== null) 
             .map(element => generateExpression(element as types.Expression))
             .join(', ');
         return `[${elements}]`;
@@ -216,6 +208,14 @@ const generateExpression = (expression: types.Expression | types.JSXEmptyExpress
 
     if (isThrowStatement(expression)){
         return generateThrowStatement(expression)
+    }
+
+    if (isFunctionDeclaration(expression)) {
+        return generateFunctionDeclaration(expression);
+    } 
+    
+    if (isFunctionExpression(expression)) {
+        return generateFunctionExpression(expression);
     }
 
     if (isNewExpression(expression)) {

@@ -1,5 +1,4 @@
 import { types } from "@babel/core";
-import generateExpression from "../generateExpression";
 
 const {
     isIdentifier

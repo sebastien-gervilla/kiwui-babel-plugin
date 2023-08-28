@@ -7,21 +7,17 @@ import { generateFunctionDeclaration } from "../generateFunctionDeclaration";
 import { generateFunctionExpression } from "../generateFunctionExpression";
 
 const {
-    isIdentifier,
     isBlockStatement,
     isReturnStatement,
-    isObjectPattern,
-    isArrayPattern,
     isFunctionDeclaration,
     isFunctionExpression,
-    isArrowFunctionExpression
+    isArrowFunctionExpression,
 } = types
 
 export const generateArrowFunction = (expression: types.ArrowFunctionExpression): string => {
     const params = expression.params.map(param => generatePattern(param)).join(', ');
 
-    const isAsync = expression.async ? "async " : ""; // Ajoutez "async" si la fonction est asynchrone
-    // console.log(expression)
+    const isAsync = expression.async ? "async " : "";
     const body = generateArrowFunctionBody(expression.body);
 
     return params ? `${isAsync}(${params}) => ${body}` : `${isAsync}() => ${body}`;
@@ -46,9 +42,6 @@ const generateArrowFunctionBody = (body: types.Expression | types.Statement | ty
         return generateExpression(body);
     }
 };
-
-// () => function zouz(){}
-// () => { function zouz(){} }
 
 const generateStatement = (statement: types.Statement): string => {
 
