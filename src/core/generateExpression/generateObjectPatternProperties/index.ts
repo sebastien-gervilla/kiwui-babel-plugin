@@ -1,0 +1,1 @@
+export { generateObjectPatternProperties } from './generateObjectPatternProperties';

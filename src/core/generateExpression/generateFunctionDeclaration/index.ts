@@ -1,0 +1,1 @@
+export { generateFunctionDeclaration } from './generateFunctionDeclaration';

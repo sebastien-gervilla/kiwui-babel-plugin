@@ -9,10 +9,7 @@ const generateJSXElement = (element: types.JSXElement): string => {
     const { openingElement } = element;
     const attributes = generateAttributes(openingElement.attributes);
 
-    console.log("=============================================================");
-    console.log("Main element:", element.openingElement);
-    console.log("=============================================================");
-    
+
     
     let transformedJSX = jsxPragma;
     if (isJSXMemberExpression(openingElement.name)) {
@@ -27,6 +24,7 @@ const generateJSXElement = (element: types.JSXElement): string => {
     }
 
     const children = generateChildren(element.children);
+    console.log(children)
     transformedJSX += children ? `, ${children})` : ')';
 
     return transformedJSX;
