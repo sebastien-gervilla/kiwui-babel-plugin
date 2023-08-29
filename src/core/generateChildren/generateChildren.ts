@@ -6,14 +6,18 @@ const {
     isJSXText,
     isJSXElement,
     isJSXFragment,
-    isJSXExpressionContainer
+    isJSXExpressionContainer,
+    isArrayExpression
 } = types;
 
-const generateChildren = (children: types.Node[]): string | null => {
+const generateChildren = (children: types.JSXFragment['children'] | types.JSXElement['children']): string | null => {
     if (!children.length) return null;
 
     // Handle JSX children
-    const childrenStrings = children.map(child => {
+    const stringChildren = children.map(child => {
+        if (isJSXElement(child))
+            return generateJSXElement(child);
+
         if (isJSXText(child)) {
             const purified = JSX.purifyJSXText(child.value);
             return purified ? `\"${purified}\"` : null;
@@ -21,20 +25,21 @@ const generateChildren = (children: types.Node[]): string | null => {
 
         if (isJSXExpressionContainer(child))
             return generateExpression(child.expression);
-            
-        if (isJSXElement(child)) {
-            return generateJSXElement(child);
-        } else if (isJSXFragment(child)) {
+        
+        if (isJSXFragment(child))
             return generateJSXFragment(child);
-        }
+        
+        // Spread child, rarest
+        if (isArrayExpression(child.expression))
+            return `...${child.expression.elements}`;
 
-        return ''; 
+        throw new Error("Spread children must be an array.")
     }).filter(Boolean);
 
-    if (!childrenStrings.length)
+    if (!stringChildren.length)
         return null;
   
-    return childrenStrings.join(', ');
+    return stringChildren.join(', ');
 }
 
 export default generateChildren;
