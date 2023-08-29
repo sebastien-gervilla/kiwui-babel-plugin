@@ -1,9 +1,8 @@
 import { types } from "@babel/core";
 import { generateExpression } from "..";
 
-const generateSpreadAttribute = (attr: types.JSXSpreadAttribute): string => {
-    // Handle spread attributes
-    const expressionString = generateExpression(attr.argument);
+const generateSpreadAttribute = (attributes: types.JSXSpreadAttribute): string => {
+    const expressionString = generateExpression(attributes.argument);
     return `{ ...${expressionString} }`;
 }
 
