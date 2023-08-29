@@ -28,7 +28,7 @@ const generateChildren = (children: types.Node[]): string | null => {
             return generateJSXFragment(child);
         }
 
-        return ''; // TODO: filter to prevent this
+        return ''; 
     }).filter(Boolean);
 
     if (!childrenStrings.length)

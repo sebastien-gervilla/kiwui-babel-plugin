@@ -92,8 +92,8 @@ const generateExpression: ExpressionGeneratorFunction<ExpressionType> = (express
         return generator(expression,parentPrecedence)
     }
     // Handle other JSX expressions
-    throw new Error("Expression not supported");
+    throw new Error(`Expression ${expression.type} not supported`);
 }
 
 
-export default generateExpression;
+export default generateExpression;  
