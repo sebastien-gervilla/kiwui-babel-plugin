@@ -10,24 +10,20 @@ const {
 } = types;
 
 const generateAttributeValue = (value: types.JSXAttribute['value']): string => {
-    if (isJSXExpressionContainer(value)) {
-        // Handle JSX expression in attributes
-        return isJSXEmptyExpression(value.expression) ? 'null' : generateExpression(value.expression);
-    }
+    if (isJSXExpressionContainer(value))
+        return !isJSXEmptyExpression(value.expression) 
+            ? generateExpression(value.expression) 
+            : 'null';
   
-    if (isJSXElement(value)) {
-        // Handle JSX element as attribute value
+    if (isJSXElement(value))
         return generateJSXElement(value);
-    }
   
-    if (isJSXFragment(value)) {
-        // Handle JSX fragment as attribute value
+    if (isJSXFragment(value))
         return generateJSXFragment(value);
-    }
   
-    // Handle literal values (e.g., strings, numbers, booleans)
-    // console.log('attributes: ', value)
-    return isStringLiteral(value) ? `"${value.value}"` : `"${value}"`;
+    return isStringLiteral(value) 
+        ? `"${value.value}"` 
+        : `"${value}"`;
 }
 
 export default generateAttributeValue;
