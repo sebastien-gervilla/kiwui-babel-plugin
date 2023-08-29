@@ -8,9 +8,9 @@ const {
     importNamespaceSpecifier
 } = types;
 
-export const jsxPragma = 'Sage.createElement';
+export const jsxPragma = 'Kiwui.createElement';
 
-export default function mainPlugin() {
+export default function transformJSX() {
     return {
         visitor: {
             Program: {
@@ -22,8 +22,8 @@ export default function mainPlugin() {
                             if (!injected) {
                                 // Inject import statement for the custom pragma
                                 const importStatement = importDeclaration(
-                                    [importNamespaceSpecifier(identifier("Sage"))],
-                                    stringLiteral('sage')
+                                    [importNamespaceSpecifier(identifier("Kiwui"))],
+                                    stringLiteral('kiwui')
                                 );
 
                                 // Add the import statement to the top-level scope

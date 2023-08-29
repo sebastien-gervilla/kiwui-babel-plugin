@@ -1,5 +1,5 @@
 import { types } from "@babel/core";
-import { jsxPragma } from "../../plugins/main.plugin";
+import { jsxPragma } from "../../plugins/transform-jsx.plugin";
 import { isFirstCharacterUppercase } from "../../utils/utils";
 import { generateAttributes, generateChildren } from "..";
 

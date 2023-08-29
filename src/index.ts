@@ -1,1 +1,1 @@
-export { mainPlugin } from './plugins';
+export { transformJSX } from './plugins';

@@ -1,1 +1,1 @@
-export { default as mainPlugin } from './main.plugin';
+export { default as transformJSX } from './transform-jsx.plugin';

@@ -1,25 +1,32 @@
 {
+    "include": ["src"],
+    "exclude": [
+        "node_modules", 
+        "dist","**/*.test.ts",
+        "**/*.test.tsx"
+    ],
     "compilerOptions": {
+        "baseUrl": "src",
+        "rootDir": "./src",
+
+        "lib": ["esnext"],
+        "types": ["node"],
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "src",
         "declaration": true,
-        "esModuleInterop": true,
         "inlineSourceMap": false,
-        "lib": ["esnext"],
         "listEmittedFiles": false,
         "listFiles": false,
-        "moduleResolution": "node",
-        "noFallthroughCasesInSwitch": true,
         "pretty": true,
         "resolveJsonModule": true,
-        "rootDir": "src",
         "skipLibCheck": true,
-        "strict": true,
         "traceResolution": false,
-        "types": ["node"]
+
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
     },
-    "compileOnSave": false,
-    "exclude": ["node_modules", "dist","**/*.test.ts","**/*.test.tsx"],
-    "include": ["src"]
+    "compileOnSave": false
 }

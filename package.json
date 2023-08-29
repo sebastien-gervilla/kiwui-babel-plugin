@@ -1,7 +1,17 @@
 {
-  "name": "sage-babel-plugin",
-  "version": "1.0.0",
-  "description": "",
+  "name": "kiwui-babel-plugin",
+  "version": "0.1.0",
+  "description": "Kiwui's JSX transformation Babel plugin",
+  "author": "Sébastien Gervilla (sebastien-gervilla)",
+  "license": "ISC",
+  "keywords": [
+    "kiwui",
+    "javascript",
+    "typescript",
+    "jsx",
+    "babel"
+  ],
+
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
   "exports": {
@@ -10,25 +20,21 @@
       "require": "./dist/cjs/index.js"
     }
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+
   "scripts": {
     "build": "rmdir /s /q dist && tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && node ./populateDist.js",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sebastien-gervilla/sage-babel-plugin.git"
+  
+  "dependencies": {
+    "@babel/core": "^7.22.9",
+    "tslib": "^2.6.0"
   },
-  "keywords": [
-    "sage",
-    "javascript",
-    "babel"
-  ],
-  "author": "sebastien-gervilla (Sébastien Gervilla)",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sebastien-gervilla/sage-babel-plugin/issues"
-  },
-  "homepage": "https://github.com/sebastien-gervilla/sage-babel-plugin#readme",
   "devDependencies": {
     "@types/babel__core": "^7.20.1",
     "@types/jest": "^29.5.3",
@@ -37,12 +43,13 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"
   },
-  "dependencies": {
-    "@babel/core": "^7.22.9",
-    "tslib": "^2.6.0"
+
+  "homepage": "https://github.com/sebastien-gervilla/kiwui-babel-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sebastien-gervilla/kiwui-babel-plugin.git"
   },
-  "files": [
-    "dist",
-    "README.md"
-  ]
+  "bugs": {
+    "url": "https://github.com/sebastien-gervilla/kiwui-babel-plugin/issues"
+  }
 }
