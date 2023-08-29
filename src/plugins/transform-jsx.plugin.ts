@@ -1,8 +1,6 @@
 import { types, NodePath } from '@babel/core';
 import { generateJSXElement } from '../core';
-import injectImport from 'utils/injectKiwuiImport';
-
-export const jsxPragma = 'Kiwui.createElement';
+import injectImport from '../utils/injectKiwuiImport';
 
 export default function transformJSX() {
     return {
@@ -26,3 +24,5 @@ export default function transformJSX() {
         },
     };
 };
+
+export const JSX_PRAGMA = 'Kiwui.createElement';
