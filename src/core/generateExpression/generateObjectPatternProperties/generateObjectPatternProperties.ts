@@ -17,7 +17,7 @@ export const generateObjectPatternProperties = (pattern: types.ObjectPattern): s
                 if ((isIdentifier(prop.key) || isStringLiteral(prop.key)) &&
                     (isIdentifier(prop.value) || isExpression(prop.value))) {
                     const key = isIdentifier(prop.key) ? prop.key.name : prop.key.value;
-                    const value = generateExpression(prop.value as types.Expression);
+                    const value = generateExpression(prop.value);
                     return `${key}: ${value}`;
                 }
 
