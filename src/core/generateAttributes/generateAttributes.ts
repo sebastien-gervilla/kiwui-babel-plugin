@@ -19,13 +19,14 @@ const generateAttributes = (attributes: (types.JSXAttribute | types.JSXSpreadAtt
             continue;
         }
         
-        if (isJSXAttribute(attribute)) {
-            // Handle regular attributes
-            const { name, value } = attribute;
-            const attributeName = isJSXIdentifier(name) ? name.name : name.namespace.name + ':' + name.name.name;
-            const attributeValue = generateAttributeValue(value);
-            stringAttributes.push(`"${attributeName}": ${attributeValue}`);
-        }
+        // Handle regular attributes
+        const { name, value } = attribute;
+        const attributeName = isJSXIdentifier(name) 
+            ? name.name 
+            : name.namespace.name + ':' + name.name.name;
+            
+        const attributeValue = generateAttributeValue(value);
+        stringAttributes.push(`"${attributeName}": ${attributeValue}`);
     }
   
     return `{ ${stringAttributes.join(', ')} }`;

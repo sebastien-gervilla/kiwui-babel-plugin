@@ -1,4 +1,5 @@
 import { types } from "@babel/core";
+
 import { generateJSXElement } from "..";
 import { generateArrowFunction } from "./generateArrowFunction";
 import { generateAssignementExpression } from "./generateAssignementExpression";
@@ -11,226 +12,88 @@ import { generateBinaryExpression } from "./generateBinaryExpression";
 import { generateAwaitExpression } from "./generateAwaitExpression";
 import { generateFunctionDeclaration } from "./generateFunctionDeclaration";
 import { generateFunctionExpression } from "./generateFunctionExpression";
-
-const {
-    isJSXEmptyExpression,
-    isArrowFunctionExpression,
-    isExpressionStatement,
-    isIdentifier,
-    isStringLiteral,
-    isBlockStatement,
-    isCallExpression,
-    isArgumentPlaceholder,
-    isMemberExpression,
-    isSpreadElement,
-    isObjectExpression,
-    isPrivateName,
-    isAssignmentExpression,
-    isBinaryExpression,
-    isNumericLiteral,
-    isArrayExpression,
-    isLogicalExpression,
-    isBooleanLiteral,
-    isConditionalExpression,
-    isIfStatement,
-    isWhileStatement,
-    isDoWhileStatement,
-    isForOfStatement,
-    isVariableDeclaration,
-    isForStatement,
-    isUpdateExpression,
-    isJSXElement,
-    isNullLiteral,
-    isUnaryExpression,
-    isBreakStatement,
-    isContinueStatement,
-    isAwaitExpression,
-    isTryStatement,
-    isThrowStatement,
-    isNewExpression,
-    isForInStatement,
-    isFunctionDeclaration,
-    isFunctionExpression
-} = types;
+import { generateBlockStatement } from "./generateBlockStatement";
+import { generateNewExpression } from "./generateNewExpression";
+import { generateArrayExpression } from "./generateArrayExpression";
+import { generateConditionalExpression } from "./generateConditionalExpression";
+import { generateUnaryExpression } from "./generateUnaryExpression";
+import { generateUpdateExpression } from "./generateUpdateExpression";
 
 
-const generateExpression = (expression: types.Expression | types.JSXEmptyExpression | types.BlockStatement | types.Statement | types.Node, parentPrecedence: number = 0): string => {
-    if (isJSXEmptyExpression(expression)) {
-        // Handle JSXEmptyExpression (e.g., <Component />)
-        return '';
-    }
 
-    if (isJSXElement(expression)){
-        return generateJSXElement(expression)
-    }
+type ExpressionType = types.Expression | types.JSXEmptyExpression | types.BlockStatement | types.Statement | types.Node;
+type ExpressionGeneratorFunction<T extends ExpressionType> = (expression: T, parentPrecedence?: number) => string;
 
-    if (isPrivateName(expression)) {
-        return '';
-    }
+type ExpressionGenerator<T extends types.Expression> = (expression: T, parentPrecedence?: number) => string;
+type ExpressionGenerators = Record<string, ExpressionGenerator<any>>;
 
-    if (isNullLiteral(expression)){
-        return 'null';
-    }
-
-
-    if (isExpressionStatement(expression)) {
-        return generateExpression(expression.expression);
-    }
-
-    if (isAssignmentExpression(expression)) {
-        return generateAssignementExpression(expression);
-    }
-
-    if (isArrowFunctionExpression(expression)) {
-        return generateArrowFunction(expression);
-    }
-
-    if (isArgumentPlaceholder(expression)) {
-        return '';  // Ignore ArgumentPlaceholder
-    }
-
-    if (isBlockStatement(expression)) {
-        const body = expression.body.map(stmt => generateStatement(stmt)).join('\n');
-        return `{\n${body}\n}`;
-    }
-
-    if (isArrayExpression(expression)) {
-        const elements = expression.elements
-            .filter(element => element !== null) 
-            .map(element => generateExpression(element as types.Expression))
-            .join(', ');
-        return `[${elements}]`;
-    }
-
-    if (isBooleanLiteral(expression)) {
-        return expression.value ? 'true' : 'false';
-    }
-
-    if (isConditionalExpression(expression)) {
-        const test = generateExpression(expression.test);
-        const consequent = generateExpression(expression.consequent);
-        const alternate = generateExpression(expression.alternate);
-        return `${test} ? ${consequent} : ${alternate}`;
-    }
-
-    if (isVariableDeclaration(expression)) {
-        return generateVariableDeclaration(expression)
-    }
-
-    if (isCallExpression(expression)) {
-        return generateCallExpression(expression)
-    }
-
-    if (isUnaryExpression(expression)) {
-        const argument = generateExpression(expression.argument);
-        return `${expression.operator}${argument}`;
-    }
-
-    if (isMemberExpression(expression)) {
-        if (isIdentifier(expression.object) && isIdentifier(expression.property) && expression.property.name === 'index') {
+const expressionGenerators: ExpressionGenerators = {
+    JSXElement: (element : types.JSXElement) => generateJSXElement(element),
+    AssignmentExpression: (expression : types.AssignmentExpression) => generateAssignementExpression(expression),
+    JSXEmptyExpression: () => '',
+    PrivateName : () => '',
+    ExpressionStatement : (expression : types.ExpressionStatement) => generateExpression(expression.expression),
+    ArrowFunctionExpression : (expression : types.ArrowFunctionExpression) => generateArrowFunction(expression),
+    ArgumentPlaceholder : () => '',
+    BlockStatement : (expression : types.BlockStatement) => generateBlockStatement(expression),
+    BooleanLiteral : (expression : types.BooleanLiteral) => expression.value ? 'true' : 'false',
+    VariableDeclaration : (expression : types.VariableDeclaration) => generateVariableDeclaration(expression),
+    CallExpression : (expression : types.CallExpression) => generateCallExpression(expression),
+    Identifier : (expression : types.Identifier) => expression.name,
+    StringLiteral : (expression) => `\"${expression.value}\"`,
+    NumericLiteral : (expression) => expression.value.toString(),
+    BinaryExpression : (expression : types.BinaryExpression, parentPrecedence) => 
+        generateBinaryExpression(expression, parentPrecedence),
+    LogicalExpression : (expression : types.LogicalExpression, parentPrecedence) => 
+        generateBinaryExpression(expression, parentPrecedence),
+    TryStatement : (expression : types.TryStatement) => generateTryStatement(expression),
+    ObjectExpression : (expression : types.ObjectExpression) => generateObjectExpression(expression),
+    ForOfStatement : (expression : types.ForOfStatement) => generateForOfStatement(expression),
+    IfStatement : (expression : types.IfStatement) => generateIfStatement(expression),
+    ForStatement : (expression : types.ForStatement) => generateForStatement(expression),
+    WhileStatement : (expression : types.WhileStatement) => generateWhileStatement(expression),
+    DoWhileStatement : (expression : types.DoWhileStatement) => generateDoWhileStatement(expression),
+    BreakStatement : () => "break;",
+    ContinueStatement : () => "continue;",
+    AwaitExpression : (expression : types.AwaitExpression) => generateAwaitExpression(expression),
+    ThrowStatement : (expression : types.ThrowStatement) => generateThrowStatement(expression),
+    FunctionDeclaration : (expression : types.FunctionDeclaration) => generateFunctionDeclaration(expression),
+    FunctionExpression : (expression : types.FunctionExpression) => generateFunctionExpression(expression),
+    ForInStatement : (expression : types.ForInStatement) => generateForInStatement(expression),
+    NullLiteral : () => 'null',
+    NewExpression : (expression : types.NewExpression) => generateNewExpression(expression),
+    ArrayExpression : (expression : types.ArrayExpression) => generateArrayExpression(expression),
+    ConditionalExpression : (expression : types.ConditionalExpression) => generateConditionalExpression(expression),
+    UnaryExpression : (expression : types.UnaryExpression) => generateUnaryExpression(expression),
+    MemberExpression : (expression : types.MemberExpression) => {
+        if (types.isIdentifier(expression.object) 
+            && types.isIdentifier(expression.property) 
+            && expression.property.name === 'index') {
             return `${expression.object.name}[${expression.property.name}]`;
         }
         return generateMemberExpression(expression);
-    }
-
-    if (isIdentifier(expression)) {
-        return expression.name;
-    }
-
-    if (isStringLiteral(expression)){
-        return `\"${expression.value}\"`;
-    }
-
-    if (isNumericLiteral(expression)) {
-        return expression.value.toString();
-    }
-
-    if (isSpreadElement(expression)) {
-        if (isIdentifier(expression.argument)) {
+    },
+    SpreadElement : (expression : types.SpreadElement) => {
+        if (types.isIdentifier(expression.argument)) {
             return `...${expression.argument}`;
         }
         return '';
-    }
+    },
+    UpdateExpression : (expression : types.UpdateExpression) => generateUpdateExpression(expression)
 
-    if (isBinaryExpression(expression) || isLogicalExpression(expression)) {
-        return generateBinaryExpression(expression, parentPrecedence);
-    }
 
-    if (isUpdateExpression(expression)) {
-        const argument = generateExpression(expression.argument);
-        const operator = expression.operator;
-        if (expression.prefix) {
-            return `${operator}${argument}`;
-        } else {
-            return `${argument}${operator}`;
-        }
-    }
+};
 
-    if (isTryStatement(expression)){
-        return generateTryStatement(expression)
-    }
 
-    if (isObjectExpression(expression)) {
-        return generateObjectExpression(expression)
-    }
-
-    if (isForOfStatement(expression)) {
-        return generateForOfStatement(expression);
-    }
-
-    if (isIfStatement(expression)) {
-        return generateIfStatement(expression);
-    }
-
-    if (isForStatement(expression)) {
-        return generateForStatement(expression);
-    }
-
-    if (isWhileStatement(expression)) {
-        return generateWhileStatement(expression);
-    }
-
-    if (isDoWhileStatement(expression)) {
-        return generateDoWhileStatement(expression);
-    }
-
-    if (isBreakStatement(expression)){
-        return "break;"
-    }
-
-    if (isContinueStatement(expression)){
-        return "continue;"
-    }
-
-    if (isAwaitExpression(expression)){
-        return generateAwaitExpression(expression);
-    }
-
-    if (isThrowStatement(expression)){
-        return generateThrowStatement(expression)
-    }
-
-    if (isFunctionDeclaration(expression)) {
-        return generateFunctionDeclaration(expression);
-    } 
+const generateExpression: ExpressionGeneratorFunction<ExpressionType> = (expression, parentPrecedence = 0) => {    
     
-    if (isFunctionExpression(expression)) {
-        return generateFunctionExpression(expression);
+    const generator = expressionGenerators[expression.type]
+    if (generator){
+        return generator(expression,parentPrecedence)
     }
-
-    if (isNewExpression(expression)) {
-        const callee = generateExpression(expression.callee);
-        const argumentsList = expression.arguments.map(arg => generateExpression(arg)).join(', ');
-        return `new ${callee}(${argumentsList})`;
-    }
-
-    if (isForInStatement(expression)) {
-        return generateForInStatement(expression);
-    }
-
     // Handle other JSX expressions
-    throw new Error("Expression not supported");
+    throw new Error(`Expression ${expression.type} not supported`);
 }
 
 
-export default generateExpression;
+export default generateExpression;  

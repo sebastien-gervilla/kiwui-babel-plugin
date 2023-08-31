@@ -33,16 +33,3 @@ export const generateBinaryExpression = (expression: types.BinaryExpression | ty
     return `${left} ${expression.operator} ${right}`;
 };
 
-
-// export const generateBinaryExpression = (expression: types.BinaryExpression | types.LogicalExpression): string => {
-//     let left = '';
-//     if (isExpression(expression.left)) {
-//         left = generateExpression(expression.left);
-//     } else {
-//         console.log("isLogicalExpr ession")
-//         console.log(expression.left)
-//     }
-
-//     const right = generateExpression(expression.right);
-//     return `${left} ${expression.operator} ${right}`;// Ignore PrivateName
-// }

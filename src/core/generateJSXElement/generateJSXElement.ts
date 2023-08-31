@@ -1,33 +1,41 @@
 import { types } from "@babel/core";
-import { jsxPragma } from "../../plugins/transform-jsx.plugin";
+import { JSX_PRAGMA } from "../../plugins/transform-jsx.plugin";
 import { isFirstCharacterUppercase } from "../../utils/utils";
 import { generateAttributes, generateChildren } from "..";
 
-const { isJSXMemberExpression } = types;
+const {
+    isJSXIdentifier,
+    isJSXMemberExpression
+} = types;
 
 const generateJSXElement = (element: types.JSXElement): string => {
     const { openingElement } = element;
     const attributes = generateAttributes(openingElement.attributes);
+    const children = generateChildren(element.children);
 
-
+    const elementType = openingElement.name;
+    if (isJSXIdentifier(elementType)) {
+        const elementName = elementType.name;
+        const type = isFirstCharacterUppercase(elementName) 
+            ? `${elementName}` 
+            : `"${elementName}"`;
     
-    let transformedJSX = jsxPragma;
-    if (isJSXMemberExpression(openingElement.name)) {
-        const tagName = openingElement.name.property.name;
-        transformedJSX += `(${tagName}, ${attributes}`;
-    } else {
-        const tagName = openingElement.name.name.toString();
-        const tag = isFirstCharacterUppercase(tagName) ?
-            `${tagName}` : `"${tagName}"`;
-
-        transformedJSX += `(${tag}, ${attributes}`;
+        return getCreateFunction(type, attributes, children);
     }
 
-    const children = generateChildren(element.children);
-    console.log(children)
-    transformedJSX += children ? `, ${children})` : ')';
+    // TODO: Support these
+    if (isJSXMemberExpression(elementType))
+        throw new Error("Member expressions are currently not supported.");
 
-    return transformedJSX;
+    throw new Error("Namespaces are currently not supported.");
+}
+
+const getCreateFunction = (type: string, attributes: string, children: string | null) => {
+    return JSX_PRAGMA + (
+        !children
+            ? `(${type}, ${attributes})`
+            : `(${type}, ${attributes}, ${children})`
+    );
 }
 
 export default generateJSXElement;
