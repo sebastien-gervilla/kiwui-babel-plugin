@@ -28,5 +28,4 @@ describe('generateArrayPatternElements', () => {
     expect(result).toEqual('');
   });
 
-  // Ajoutez d'autres cas de test ici...
 });
