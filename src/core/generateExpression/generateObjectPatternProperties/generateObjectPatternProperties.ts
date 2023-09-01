@@ -13,16 +13,21 @@ const {
 export const generateObjectPatternProperties = (pattern: types.ObjectPattern): string => {
     return pattern.properties
         .map(prop => {
-            if (isObjectProperty(prop)) {
-                if ((isIdentifier(prop.key) || isStringLiteral(prop.key)) &&
-                    (isIdentifier(prop.value) || isExpression(prop.value))) {
-                    const key = isIdentifier(prop.key) ? prop.key.name : prop.key.value;
-                    const value = generateExpression(prop.value);
-                    return `${key}: ${value}`;
+            if (types.isObjectProperty(prop)) {
+                const key = types.isIdentifier(prop.key)
+                  ? prop.key.name
+                  : types.isStringLiteral(prop.key)
+                  ? prop.key.value
+                  : "";
+        
+                if (types.isAssignmentPattern(prop.value)) {
+                  const defaultValue = generateExpression(prop.value.right);
+                  return `${key} = ${defaultValue}`;
+                } else {
+                  const value = generateExpression(prop.value);
+                  return `${key}: ${value}`;
                 }
-
-                return '';
-            } 
+            }
             
             if (isIdentifier(prop.argument)) {
                 return `...${prop.argument.name}`;

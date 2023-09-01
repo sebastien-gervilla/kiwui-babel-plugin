@@ -116,4 +116,98 @@ describe("generateJSXElement", () => {
 
         expect(() => generateJSXElement(element)).toThrowError("Namespaces are currently not supported.");
     });
+
+
+    it("should handle complex JSX attributes", () => {
+        const onClickExpression = types.arrowFunctionExpression(
+            [],
+            types.blockStatement([
+                types.expressionStatement(
+                    types.callExpression(
+                        types.memberExpression(
+                            types.identifier("console"),
+                            types.identifier("log")
+                        ),
+                        [
+                            types.arrayExpression([types.spreadElement(types.identifier("array"))])
+                        ]
+                    )
+                )
+            ])
+        );
+    
+        const element = types.jsxElement(
+            types.jsxOpeningElement(
+                types.jsxIdentifier("button"),
+                [
+                    types.jsxAttribute(
+                        types.jsxIdentifier("onClick"),
+                        types.jsxExpressionContainer(onClickExpression)
+                    )
+                ],
+                false
+            ),
+            types.jsxClosingElement(types.jsxIdentifier("button")),
+            [types.jsxText("Button")]
+        );
+    
+        const result = generateJSXElement(element);
+    
+        expect(result).toBe(
+            'Kiwui.createElement("button", { "onClick": () => console.log([...array]); }, "Button")'
+        );
+    });
+
+
+    it("should handle JSX with an arrow function onClick handler", () => {
+        const arrowFunction = types.arrowFunctionExpression(
+            [],
+            types.blockStatement([
+                types.variableDeclaration("const", [
+                    types.variableDeclarator(
+                        types.objectPattern([
+                            types.objectProperty(
+                                types.identifier("name"),
+                                types.assignmentPattern(
+                                    types.identifier("name"),
+                                    types.stringLiteral("default")
+                                )
+                            )
+                        ]),
+                        types.identifier("object")
+                    )
+                ]),
+                types.expressionStatement(
+                    types.callExpression(
+                        types.memberExpression(
+                            types.identifier("console"),
+                            types.identifier("log")
+                        ),
+                        [types.identifier("name")]
+                    )
+                )
+            ])
+        );
+
+        const element = types.jsxElement(
+            types.jsxOpeningElement(
+                types.jsxIdentifier("button"),
+                [
+                    types.jsxAttribute(
+                        types.jsxIdentifier("onClick"),
+                        types.jsxExpressionContainer(arrowFunction)
+                    )
+                ],
+                false
+            ),
+            types.jsxClosingElement(types.jsxIdentifier("button")),
+            [types.jsxText("Button")]
+        );
+
+        const result = generateJSXElement(element);
+
+        expect(result).toBe(
+            'Kiwui.createElement("button", { "onClick": () => {\nconst { name = "default" } = object;\nconsole.log(name);\n} }, "Button")'
+        );
+    });
 });

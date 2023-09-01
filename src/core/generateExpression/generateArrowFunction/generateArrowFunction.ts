@@ -26,7 +26,7 @@ export const generateArrowFunction = (expression: types.ArrowFunctionExpression)
 
 const generateArrowFunctionBody = (body: types.Expression | types.Statement | types.BlockStatement | types.FunctionDeclaration | types.FunctionExpression): string => {
     if (isBlockStatement(body)) {
-        const isSingleLine = !isBlockStatement(body);
+        const isSingleLine = !(body.body.length === 1);
         return generateBlockStatement(body,isSingleLine);
     } else if (isFunctionDeclaration(body)) {
         return generateFunctionDeclaration(body);
