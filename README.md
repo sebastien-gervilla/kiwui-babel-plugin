@@ -1,1 +1,1 @@
-# sage-babel-plugin
+# kiwui-babel-plugin

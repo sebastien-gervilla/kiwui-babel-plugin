@@ -1,0 +1,1 @@
+export { generateFunctionExpression } from './generateFunctionExpression';

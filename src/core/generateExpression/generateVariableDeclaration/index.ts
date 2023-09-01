@@ -1,0 +1,1 @@
+export { generateVariableDeclaration } from './generateVariableDeclaration';
