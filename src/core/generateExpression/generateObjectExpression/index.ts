@@ -1,0 +1,1 @@
+export { generateObjectExpression } from './generateObjectExpression';

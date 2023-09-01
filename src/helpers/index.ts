@@ -1,0 +1,1 @@
+export { default as JSX } from './JSX.helper';

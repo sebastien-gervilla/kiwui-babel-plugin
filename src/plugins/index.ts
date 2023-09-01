@@ -1,0 +1,1 @@
+export { default as transformJSX } from './transform-jsx.plugin';
