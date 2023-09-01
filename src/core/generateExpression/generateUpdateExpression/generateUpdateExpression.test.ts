@@ -1,5 +1,5 @@
 import { types } from '@babel/core';
-import { generateUpdateExpression } from './generateUpdateExpression'; // Assurez-vous d'importer correctement la fonction
+import { generateUpdateExpression } from './generateUpdateExpression';
 
 describe('generateUpdateExpression', () => {
     it('should generate the correct code for a prefix update expression', () => {

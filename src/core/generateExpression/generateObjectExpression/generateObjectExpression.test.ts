@@ -31,7 +31,7 @@ describe("generateObjectExpression", () => {
     });
 
     it("should ignore properties with non-expression values", () => {
-        const property = types.objectProperty(types.identifier("key"), types.stringLiteral("value")); // Utiliser une StringLiteral comme valeur
+        const property = types.objectProperty(types.identifier("key"), types.stringLiteral("value"));
         const expression = types.objectExpression([property]);
 
         const result = generateObjectExpression(expression);
