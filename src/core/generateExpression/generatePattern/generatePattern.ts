@@ -1,30 +1,28 @@
 import { generateArrayPatternElements } from "../generateArrayPatternElement";
 import { generateObjectPatternProperties } from "../generateObjectPatternProperties";
 import { types } from "@babel/core";
+import { generateRestElement } from "../generateRestElement";
 
 const {
     isIdentifier,
     isObjectPattern,
     isArrayPattern,
-    isPattern
-    
+    isPattern,
+    isRestElement
 } = types
 
-export const generatePattern = (param: types.Identifier | types.Pattern | types.RestElement, init?: types.Expression): any => {
-    if (isIdentifier(param)) {
-        return param.name;
-    }
+export const generatePattern = (pattern: types.Identifier | types.Pattern | types.RestElement, init?: types.Expression): any => {
+    if (isIdentifier(pattern))
+        return pattern.name;
     
-    if (isObjectPattern(param)) {
-        return `{ ${generateObjectPatternProperties(param)} }`;
-    }
+    if (isObjectPattern(pattern))
+        return `{ ${generateObjectPatternProperties(pattern)} }`;
     
-    if (isArrayPattern(param)) {
-        return `[ ${generateArrayPatternElements(param)} ]`;
-    }
+    if (isArrayPattern(pattern))
+        return `[ ${generateArrayPatternElements(pattern)} ]`;
 
-    if (isPattern(param))
-        throw new Error("Pattern not supported");
-    
-    return ''
+    if (isRestElement(pattern))
+        return generateRestElement(pattern);
+
+    throw new Error("Assignment pattern not supported");
 }

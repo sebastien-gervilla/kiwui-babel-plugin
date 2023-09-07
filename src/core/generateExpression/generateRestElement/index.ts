@@ -1,0 +1,1 @@
+export { generateRestElement } from './generateRestElement';
