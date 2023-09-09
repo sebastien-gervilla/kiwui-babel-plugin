@@ -1,5 +1,5 @@
 import { types, NodePath } from '@babel/core';
-import { generateJSXElement } from '../core';
+import { generate } from '@/core';
 import injectImport from '../utils/injectKiwuiImport';
 
 export default function transformJSX() {
@@ -15,7 +15,7 @@ export default function transformJSX() {
                             if (!injected) injected = injectImport(path);
                             
                             // Convert JSX element into a call to the custom pragma
-                            const parentElement = generateJSXElement(path.node);
+                            const parentElement = generate(path.node);
                             path.replaceWithSourceString(parentElement);
                         },
                     });

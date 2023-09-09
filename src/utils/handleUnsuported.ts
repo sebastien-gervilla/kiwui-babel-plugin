@@ -1,7 +1,7 @@
 export const handleUnsuported = (unsuported: any, message: string) => {
-    console.log(red + "Element not supported by kiwui-babel-plugin :\n" + reset);
+    console.log(red + "\nElement not supported by kiwui-babel-plugin :\n" + reset);
     console.log(unsuported);
-    console.log(blue + "\nThis could be a bug, please raise an issue on github." + reset);
+    console.log(blue + "\nThis could be a bug, please raise an issue on github.\n" + reset);
     throw new Error(message);
 }
 
