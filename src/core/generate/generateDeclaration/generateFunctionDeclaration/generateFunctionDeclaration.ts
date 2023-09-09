@@ -1,12 +1,11 @@
-import { generateBlockStatement } from "../generateBlockStatement";
-import { generatePattern } from "../generatePattern";
 import { types } from "@babel/core";
+import { generate, generateFromArray } from "@/core";
 
 
 export const generateFunctionDeclaration = (declaration: types.FunctionDeclaration): string => {
     const functionName = declaration.id ? declaration.id.name : '';
-    const params = declaration.params.map(param => generatePattern(param)).join(', ');
-    const body = generateBlockStatement(declaration.body);
+    const params = generateFromArray(declaration.params);
+    const body = generate(declaration.body);
 
     return `function ${functionName}(${params}) ${body}`;
 };
