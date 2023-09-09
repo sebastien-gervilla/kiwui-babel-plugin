@@ -1,18 +1,19 @@
 import { types } from "@babel/core";
-import { JSX_PRAGMA } from "../../plugins/transform-jsx.plugin";
-import { isFirstCharacterUppercase } from "../../utils/utils";
-import { generateAttributes, generateChildren } from "..";
-import { generateJSXMemberExpression } from "../generateJSXMemberExpression";
+import { generate, generateFromArray } from "@/core";
+import { isFirstCharacterUppercase } from "@/utils/utils";
+import { JSX_PRAGMA } from "@/plugins/transform-jsx.plugin";
 
 const {
     isJSXIdentifier,
     isJSXMemberExpression
 } = types;
 
-const generateJSXElement = (element: types.JSXElement): string => {
-    const { openingElement } = element;
-    const attributes = generateAttributes(openingElement.attributes);
-    const children = generateChildren(element.children);
+export const generateJSXElement = (element: types.JSXElement): string => {
+    const { openingElement } = element; // TODO: generateOpeningElement function
+    const generatedAttributes = generateFromArray(openingElement.attributes);
+    const attributes = generatedAttributes ? `{ ${generatedAttributes} }` : 'null'; // TODO: Should generateFromArray return null if empty ?
+    
+    const children = generateFromArray(element.children);
 
     const elementType = openingElement.name;
     if (isJSXIdentifier(elementType)) {
@@ -25,7 +26,7 @@ const generateJSXElement = (element: types.JSXElement): string => {
     }
 
     if (isJSXMemberExpression(elementType)){
-        const memberExpression = generateJSXMemberExpression(elementType);
+        const memberExpression = generate(elementType);
         return getCreateFunction(memberExpression, attributes, children);
     }
 
