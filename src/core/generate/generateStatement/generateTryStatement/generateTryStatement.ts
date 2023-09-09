@@ -1,9 +1,8 @@
 import { types } from "@babel/core";
-import generateExpression from "../generateExpression";
-import { generateStatement } from "./generateStatement";
+import { generate } from "@/core";
 
 export const generateTryStatement = (statement: types.TryStatement): string => {
-    const tryBlock = generateStatement(statement.block);
+    const tryBlock = generate(statement.block);
     const catchBlock = statement.handler ? generateCatchClause(statement.handler) : '';
     const finallyBlock = statement.finalizer ? generateFinallyBlock(statement.finalizer) : '';
 
@@ -11,13 +10,13 @@ export const generateTryStatement = (statement: types.TryStatement): string => {
 };
 
 export const generateCatchClause = (clause: types.CatchClause): string => {
-    const param = clause.param ? generateExpression(clause.param) : '';
-    const catchBlock = generateStatement(clause.body);
+    const param = clause.param ? generate(clause.param) : '';
+    const catchBlock = generate(clause.body);
 
     return `catch (${param}) ${catchBlock}`;
 };
 
 export const generateFinallyBlock = (block: types.BlockStatement): string => {
-    return `finally ${generateStatement(block)}`;
+    return `finally ${generate(block)}`;
 };
 
