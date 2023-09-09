@@ -4,11 +4,9 @@ import { generateUnaryExpression } from './generateUnaryExpression'; // Assurez-
 
 describe('generateUnaryExpression', () => {
     it('should generate the correct code for a unary expression', () => {
-        const expression = {
-            type: 'UnaryExpression',
-            operator: '!',
-            argument: { type: 'Identifier', name: 'value' }
-        } as types.UnaryExpression;
+        const expression = types.unaryExpression(
+            '!', types.identifier('value')
+        );
         
         const result = generateUnaryExpression(expression);
         expect(result).toBe('!value');

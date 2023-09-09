@@ -1,7 +1,7 @@
 import { types } from "@babel/core";
-import generateExpression from "../generateExpression";
+import { generate } from "@/core";
 
 export const generateUnaryExpression = (expression : types.UnaryExpression) => {
-    const argument = generateExpression(expression.argument);
+    const argument = generate(expression.argument);
     return `${expression.operator}${argument}`;
 }
