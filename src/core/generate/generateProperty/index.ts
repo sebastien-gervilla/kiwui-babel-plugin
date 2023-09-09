@@ -1,0 +1,1 @@
+export { propertyGenerator } from './generateProperty';
