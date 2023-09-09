@@ -1,8 +1,5 @@
 import { types } from "@babel/core";
-import generateExpression from "../generateExpression";
-import { generateStatement } from "./generateStatement";
-import { generateVariableDeclaration } from "../generateVariableDeclaration";
-
+import { generate } from "@/core";
 const {
     isExpression,
     isVariableDeclaration
@@ -11,14 +8,14 @@ const {
 export const generateForOfStatement = (expression: types.ForOfStatement): string => {
     let left = '';
     if (isExpression(expression.left)) {
-        left = generateExpression(expression.left);
+        left = generate(expression.left);
     } else {
         if (isVariableDeclaration(expression.left)){
-            left = generateVariableDeclaration(expression.left)
+            left = generate(expression.left)
         }
         throw new Error(`ForOf , left Operator not supported ${expression.left}`)
     }
-    const right = generateExpression(expression.right);
-    const body = generateStatement(expression.body);
+    const right = generate(expression.right);
+    const body = generate(expression.body);
     return `for (${left} of ${right}) ${body}`;
 }
