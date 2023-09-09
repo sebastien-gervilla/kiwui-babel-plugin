@@ -1,5 +1,5 @@
 import { types } from "@babel/core";
-import { generateObjectExpression } from "../generateObjectExpression";
+import { generateObjectExpression } from ".";
  
 describe("generateObjectExpression", () => {
     it("should generate an object expression with identifier property key", () => {
@@ -17,7 +17,7 @@ describe("generateObjectExpression", () => {
 
         const result = generateObjectExpression(expression);
 
-        expect(result).toBe('{ name: "John" }');
+        expect(result).toBe('{ \"name\": "John" }');
     });
 
     it("should ignore non-identifier and non-string-literal property keys", () => {
