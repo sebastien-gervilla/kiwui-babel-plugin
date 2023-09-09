@@ -1,0 +1,1 @@
+export { generate, generateFromArray } from './generate';
