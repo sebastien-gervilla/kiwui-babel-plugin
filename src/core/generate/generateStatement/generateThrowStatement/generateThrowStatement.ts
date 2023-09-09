@@ -1,7 +1,7 @@
 import { types } from "@babel/core";
-import generateExpression from "../generateExpression";
+import { generate } from "@/core";
 
 export const generateThrowStatement = (statement: types.ThrowStatement): string => {
-    const argument = generateExpression(statement.argument);
+    const argument = generate(statement.argument);
     return `throw ${argument};`;
 };
