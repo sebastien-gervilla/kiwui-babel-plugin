@@ -1,5 +1,5 @@
 import { types } from "@babel/core";
-import { generateMemberExpression } from "../generateMemberExpression";
+import { generateMemberExpression } from ".";
 
 describe("generateMemberExpression", () => {
     it("should generate a member expression with identifier property", () => {
@@ -22,15 +22,13 @@ describe("generateMemberExpression", () => {
         expect(result).toBe('myObject.myProperty'); 
     });
 
-
-
-    it("should ignore PrivateName property", () => {
+    it("should generate a member expression with private name", () => {
         const object = types.identifier("myObject");
         const property = types.privateName(types.identifier("privateProperty"));
         const expression = types.memberExpression(object, property);
 
         const result = generateMemberExpression(expression);
 
-        expect(result).toBe("myObject");
+        expect(result).toBe("myObject.#privateProperty");
     });
 });
