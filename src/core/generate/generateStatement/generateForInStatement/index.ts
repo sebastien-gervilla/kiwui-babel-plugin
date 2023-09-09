@@ -1,0 +1,1 @@
+export { generateForInStatement } from './generateForInStatement';

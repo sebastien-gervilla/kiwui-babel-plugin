@@ -1,0 +1,1 @@
+export { literalGenerator } from './generateLiteral';

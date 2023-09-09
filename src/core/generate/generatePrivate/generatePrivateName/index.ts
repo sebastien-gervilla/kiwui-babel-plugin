@@ -1,0 +1,1 @@
+export { generatePrivateName } from './generatePrivateName';
