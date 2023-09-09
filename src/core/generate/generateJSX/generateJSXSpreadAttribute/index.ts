@@ -1,0 +1,1 @@
+export { generateJSXSpreadAttribute } from './generateJSXSpreadAttribute';
