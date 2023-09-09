@@ -6,6 +6,7 @@ import { expressionGenerator } from "./generateExpression";
 import { statementGenerator } from "./generateStatement";
 import { declarationGenerator } from "./generateDeclaration";
 import { literalGenerator } from "./generateLiteral";
+import { methodGenerator } from "./generateMethod";
 import { propertyGenerator } from "./generateProperty";
 import { patternGenerator } from "./generatePattern";
 import { privateGenerator } from "./generatePrivate";
@@ -19,6 +20,7 @@ const generator: AliasMap<PossibleAliases> = {
     ...statementGenerator,
     ...declarationGenerator,
     ...literalGenerator,
+    ...methodGenerator,
     ...propertyGenerator,
     ...patternGenerator,
     ...privateGenerator,
