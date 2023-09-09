@@ -1,0 +1,1 @@
+export { declarationGenerator } from './generateDeclaration';
