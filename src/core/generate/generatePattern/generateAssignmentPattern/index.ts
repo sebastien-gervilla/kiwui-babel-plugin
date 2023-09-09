@@ -1,0 +1,1 @@
+export { generateAssignmentPattern } from './generateAssignmentPattern';
