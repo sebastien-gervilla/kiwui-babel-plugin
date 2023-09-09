@@ -1,7 +1,7 @@
 import { types } from "@babel/core";
-import { generateAssignementExpression } from "../generateAssignementExpression";
+import { generateAssignmentExpression } from ".";
 
-describe("generateAssignementExpression", () => {
+describe("generateAssignmentExpression", () => {
   
     it("should generate an assignment expression with expression on the left", () => {
     const left = types.identifier("variable");
@@ -9,7 +9,7 @@ describe("generateAssignementExpression", () => {
     
     const assignmentExpression = types.assignmentExpression("=", left, right);
     
-    const result = generateAssignementExpression(assignmentExpression);
+    const result = generateAssignmentExpression(assignmentExpression);
     
     expect(result).toBe("variable = 42");
   });
