@@ -1,8 +1,8 @@
 import { types } from "@babel/core";
-import { generateChildren } from "..";
+import { generateFromArray } from "@/core";
 
 const generateJSXFragment = (fragment: types.JSXFragment): string => {
-    const children = generateChildren(fragment.children);
+    const children = generateFromArray(fragment.children);
     return `[${children}]`;
 }
 
