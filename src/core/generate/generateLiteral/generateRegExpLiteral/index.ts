@@ -1,0 +1,1 @@
+export { generateRegExpLiteral } from './generateRegExpLiteral';
