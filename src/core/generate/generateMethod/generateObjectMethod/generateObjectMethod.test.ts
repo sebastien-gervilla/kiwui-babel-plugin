@@ -1,7 +1,7 @@
 import { types } from "@babel/core";
 import { generateObjectMethod } from "./generateObjectMethod";
 
-describe('generateObjectMethod', () => {
+describe('generateObjectMethod', () => { // TODO: generator and computed
     it('should generate object method without kind', () => {
         const method = types.objectMethod(
             undefined,
