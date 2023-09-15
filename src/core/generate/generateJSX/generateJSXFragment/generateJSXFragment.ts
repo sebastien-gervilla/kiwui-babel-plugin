@@ -1,9 +1,9 @@
 import { types } from "@babel/core";
-import { generateFromArray } from "@/core";
+import JSXHelper from "@/helpers/JSX.helper";
 
 const generateJSXFragment = (fragment: types.JSXFragment): string => {
-    const children = generateFromArray(fragment.children);
-    return `[${children}]`;
+    const children = JSXHelper.generateFromJSXArray(fragment.children);
+    return children ? `[${children}]` : ''; // TODO: Should we ...[children] ?
 }
 
 export default generateJSXFragment;
