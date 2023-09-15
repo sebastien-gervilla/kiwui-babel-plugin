@@ -33,7 +33,8 @@ const generator: AliasMap<PossibleAliases> = {
 
         const init = generate(expression.init);
         return `${left} = ${init}`;
-    }
+    },
+    TemplateElement: (expression) => expression.value.raw
 }
 
 export const generate = (value: PossibleAliases) => {
