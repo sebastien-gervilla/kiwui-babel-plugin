@@ -14,6 +14,6 @@ export default class JSXHelper {
             const generated = generate(element);
             if (generated) stringJsx += `${generated}, `
         }
-        return stringJsx;
+        return stringJsx.slice(0, -2);
     }
 }
