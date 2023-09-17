@@ -5,5 +5,8 @@ export const generateJSXText = (text: types.JSXText) => {
     const purified = JSX.purifyJSXText(text.value);
     return purified
         ? `\"${purified}\"`
-        : 'null'; // TODO: this could cause an error
+        : '';
 }
+
+// NOTE: We put '' if purified is an empty string.
+// It allows us to conditionally check if "children" is empty later on, and if so not rendering it.

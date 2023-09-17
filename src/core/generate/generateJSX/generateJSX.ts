@@ -16,7 +16,7 @@ export const jsxGenerator: AliasMap<types.JSX> = {
     JSXAttribute: generateJSXAttribute,
     // JSXClosingElement: () => '',
     JSXElement: generateJSXElement,
-    JSXEmptyExpression: () => 'null', // TODO: Is it really null ?
+    JSXEmptyExpression: () => '', // NOTE: This helps us not rendering empty "children"
     JSXExpressionContainer: ({ expression }) => generate(expression),
     // JSXSpreadChild: () => '',
     JSXIdentifier: ({ name }) => name,

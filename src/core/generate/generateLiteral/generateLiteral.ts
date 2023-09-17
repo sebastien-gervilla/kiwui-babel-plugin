@@ -3,10 +3,14 @@ import { types } from "@babel/core";
 import { AliasMap } from "../generate.types";
 
 // Generation functions
+import { generateRegExpLiteral } from "./generateRegExpLiteral";
+import { generateTemplateLiteral } from "./generateTemplateLiteral";
 
 export const literalGenerator: AliasMap<types.Literal> = {
-    BooleanLiteral: (expression) => expression.value ? 'true' : 'false', // TODO: Don't conditionally check the value ? (could he in expression object)
+    StringLiteral: (expression) => `\"${expression.value}\"`,
     NumericLiteral: (expression) => expression.value.toString(),
     NullLiteral : () => 'null',
-    StringLiteral: (expression) => `\"${expression.value}\"`,
+    BooleanLiteral: (expression) => expression.value ? 'true' : 'false', // TODO: Don't conditionally check the value ? (could he in expression object)
+    RegExpLiteral: generateRegExpLiteral,
+    TemplateLiteral: generateTemplateLiteral
 }

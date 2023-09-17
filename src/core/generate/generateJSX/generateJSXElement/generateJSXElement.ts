@@ -2,6 +2,7 @@ import { types } from "@babel/core";
 import { generate, generateFromArray } from "@/core";
 import { isFirstCharacterUppercase } from "@/utils/utils";
 import { JSX_PRAGMA } from "@/plugins/transform-jsx.plugin";
+import JSXHelper from "@/helpers/JSX.helper";
 
 const {
     isJSXIdentifier,
@@ -10,10 +11,9 @@ const {
 
 export const generateJSXElement = (element: types.JSXElement): string => {
     const { openingElement } = element; // TODO: generateOpeningElement function
-    const generatedAttributes = generateFromArray(openingElement.attributes);
-    const attributes = generatedAttributes ? `{ ${generatedAttributes} }` : 'null'; // TODO: Should generateFromArray return null if empty ?
     
-    const children = generateFromArray(element.children);
+    const attributes = `{ ${generateFromArray(openingElement.attributes)} }`;
+    const children = JSXHelper.generateFromJSXArray(element.children);
 
     const elementType = openingElement.name;
     if (isJSXIdentifier(elementType)) {

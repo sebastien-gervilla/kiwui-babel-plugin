@@ -36,7 +36,7 @@ const runSecondTest = () => it("should handle JSX identifiers with first charact
 
     const result = generateJSXElement(element);
 
-    expect(result).toBe(`Kiwui.createElement(Component, null)`);
+    expect(result).toBe(`Kiwui.createElement(Component, {  })`);
 });
 
 const runThirdTest = () => it("should handle unsupported JSX member expressions with attributes", () => {
@@ -92,7 +92,7 @@ const runFourthTest = () => it("should handle JSX member expressions with recurs
     const result = generateJSXElement(element);
 
     expect(result).toBe(
-        `Kiwui.createElement(Menu.Item.Recursif, null)`
+        `Kiwui.createElement(Menu.Item.Recursif, {  })`
     );
 });
 

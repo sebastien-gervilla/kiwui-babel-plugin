@@ -1,0 +1,1 @@
+export { generateObjectMethod } from './generateObjectMethod';
