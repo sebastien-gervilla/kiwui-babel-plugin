@@ -1,47 +1,44 @@
 import { types } from "@babel/core";
-import { generate } from "../../generate";
+import { generate } from "@/core";
 
-const precedence: Record<string, number> = {
-    "||": 1,
-    "&&": 2,
-    "|": 3,
-    "^": 4,
-    "&": 5,
-    "==": 6, "!=": 6, "===": 6, "!==": 6,
-    "<": 7, ">": 7, "<=": 7, ">=": 7,
-    "<<": 8, ">>": 8, ">>>": 8,
-    "+": 9, "-": 9,
-    "*": 10, "/": 10, "%": 10,
-    "**": 11
-};
-
-const { // TODO: Find a way to better handle these
+const {
     isBinaryExpression,
     isLogicalExpression
 } = types;
   
-export const generateBinaryExpression = (expression: types.BinaryExpression | types.LogicalExpression, parentPrecedence: number = 0): string => {
+export const generateBinaryExpression = (expression: BinaryOrLogical, parentPrecedence: number = 0): string => {
     const currentPrecedence = precedence[expression.operator];
 
-    const left = isBinaryExpression(expression.left)
+    const left = isBinaryOrLogical(expression.left)
         ? generateBinaryExpression(expression.left, currentPrecedence)
-        : isLogicalExpression(expression.left)
-            ? generateBinaryExpression(expression.left, currentPrecedence) // TODO: Sepate logical from binary ?
-            : generate(expression.left);
+        : generate(expression.left);
 
 
-    const right = isBinaryExpression(expression.right)
+    const right = isBinaryOrLogical(expression.right)
         ? generateBinaryExpression(expression.right, currentPrecedence)
-        : isLogicalExpression(expression.right)
-            ? generateBinaryExpression(expression.right, currentPrecedence)
-            : generate(expression.right);
+        : generate(expression.right);
   
-    if (currentPrecedence !== undefined && currentPrecedence < parentPrecedence) {
-      return `(${left} ${expression.operator} ${right})`;
-    }
-  
-    return `${left} ${expression.operator} ${right}`;
+    return currentPrecedence < parentPrecedence 
+        ? `(${left} ${expression.operator} ${right})`
+        : `${left} ${expression.operator} ${right}`;
 };
 
-const isBinaryOrLogical = (expression: any): expression is types.BinaryExpression | types.LogicalExpression => 
-    isBinaryExpression(expression) || isLogicalExpression(expression)
+type BinaryOrLogical = types.BinaryExpression | types.LogicalExpression;
+const isBinaryOrLogical = (expression: any): expression is BinaryOrLogical => 
+    isBinaryExpression(expression) || isLogicalExpression(expression);
+
+// https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Operators/Operator_precedence
+const precedence: Record<BinaryOrLogical['operator'], number> = {
+    "|>": 2,
+    "||": 4, "??": 4,
+    "&&": 5,
+    "|": 6,
+    "^": 7,
+    "&": 8,
+    "==": 9, "!=": 9, "===": 9, "!==": 9,
+    "<": 10, ">": 10, "<=": 10, ">=": 10, "instanceof": 10, "in": 10,
+    "<<": 11, ">>": 11, ">>>": 11,
+    "+": 12, "-": 12,
+    "*": 13, "/": 13, "%": 13,
+    "**": 14
+};

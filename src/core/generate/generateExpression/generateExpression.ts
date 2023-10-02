@@ -19,20 +19,13 @@ import { generateUpdateExpression } from "./generateUpdateExpression";
 export const expressionGenerator: AliasMap<types.Expression> = {
     ArrayExpression: generateArrayExpression,
     AssignmentExpression: generateAssignmentExpression,
-    BinaryExpression: generateBinaryExpression, // TODO: Rework these
-    LogicalExpression: generateBinaryExpression, // TODO: Rework these
+    BinaryExpression: generateBinaryExpression,
+    LogicalExpression: generateBinaryExpression,
     CallExpression: generateCallExpression,
     ConditionalExpression: generateConditionalExpression,
     FunctionExpression: generateFunctionExpression,
     Identifier: (expression) => expression.name, // TODO: Should identifier be here ?
-    MemberExpression: (expression) => {
-        if (types.isIdentifier(expression.object) 
-            && types.isIdentifier(expression.property) 
-            && expression.property.name === 'index') {
-            return `${expression.object.name}[${expression.property.name}]`;
-        }
-        return generateMemberExpression(expression);
-    },
+    MemberExpression: generateMemberExpression,
     NewExpression: generateNewExpression,
     ObjectExpression: generateObjectExpression,
     // SequenceExpression: () => '',
@@ -45,7 +38,6 @@ export const expressionGenerator: AliasMap<types.Expression> = {
     // MetaProperty: () => '',
     // Super: () => '',
     // TaggedTemplateExpression: () => '',
-    // TemplateLiteral: () => '',
     // YieldExpression: () => '',
     AwaitExpression: generateAwaitExpression,
     // Import: () => '',
@@ -67,6 +59,5 @@ export const expressionGenerator: AliasMap<types.Expression> = {
     // TSTypeAssertion: () => '',
     // TSNonNullExpression: () => '',
 
-    // PrivateName: () => '',
     // ArgumentPlaceholder: () => '',
 };
