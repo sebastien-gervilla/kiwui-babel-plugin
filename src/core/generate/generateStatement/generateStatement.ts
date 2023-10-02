@@ -1,3 +1,4 @@
+import { generateReturnStatement } from './generateReturnStatement/generateReturnStatement';
 // Types
 import { types } from "@babel/core";
 import { AliasMap } from "../generate.types";
@@ -27,17 +28,11 @@ export const statementGenerator: AliasMap<types.Statement> = {
     WhileStatement: generateWhileStatement,
     DoWhileStatement: generateDoWhileStatement,
     TryStatement: generateTryStatement,
+    ThrowStatement: generateThrowStatement,
     SwitchStatement: generateSwitchStatement,
 
     // Keywords
     BreakStatement: () => "break",
     ContinueStatement: () => "continue",
-    ThrowStatement: generateThrowStatement,
-    ReturnStatement: (expression) => { // TODO: Relocate
-        const argument = expression.argument
-            ? generate(expression.argument)
-            : `${expression.argument}`
-
-        return `return ${argument}`;
-    }
+    ReturnStatement: generateReturnStatement
 }
