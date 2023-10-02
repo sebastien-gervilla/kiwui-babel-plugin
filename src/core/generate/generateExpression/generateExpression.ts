@@ -19,8 +19,8 @@ import { generateUpdateExpression } from "./generateUpdateExpression";
 export const expressionGenerator: AliasMap<types.Expression> = {
     ArrayExpression: generateArrayExpression,
     AssignmentExpression: generateAssignmentExpression,
-    BinaryExpression: generateBinaryExpression, // TODO: Rework these
-    LogicalExpression: generateBinaryExpression, // TODO: Rework these
+    BinaryExpression: generateBinaryExpression,
+    LogicalExpression: generateBinaryExpression,
     CallExpression: generateCallExpression,
     ConditionalExpression: generateConditionalExpression,
     FunctionExpression: generateFunctionExpression,
@@ -45,7 +45,6 @@ export const expressionGenerator: AliasMap<types.Expression> = {
     // MetaProperty: () => '',
     // Super: () => '',
     // TaggedTemplateExpression: () => '',
-    // TemplateLiteral: () => '',
     // YieldExpression: () => '',
     AwaitExpression: generateAwaitExpression,
     // Import: () => '',
@@ -67,6 +66,5 @@ export const expressionGenerator: AliasMap<types.Expression> = {
     // TSTypeAssertion: () => '',
     // TSNonNullExpression: () => '',
 
-    // PrivateName: () => '',
     // ArgumentPlaceholder: () => '',
 };
