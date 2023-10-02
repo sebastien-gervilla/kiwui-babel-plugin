@@ -6,11 +6,14 @@ import { AliasMap } from "../generate.types";
 import { generateRegExpLiteral } from "./generateRegExpLiteral";
 import { generateTemplateLiteral } from "./generateTemplateLiteral";
 
+// NOTE: All covered.
 export const literalGenerator: AliasMap<types.Literal> = {
-    StringLiteral: (expression) => `\"${expression.value}\"`,
-    NumericLiteral: (expression) => expression.value.toString(),
+    StringLiteral: ({ value }) => `\"${value}\"`,
+    NumericLiteral: ({ value }) => value.toString(),
     NullLiteral : () => 'null',
-    BooleanLiteral: (expression) => expression.value ? 'true' : 'false', // TODO: Don't conditionally check the value ? (could he in expression object)
+    BooleanLiteral: ({ value }) => `${value}`,
     RegExpLiteral: generateRegExpLiteral,
-    TemplateLiteral: generateTemplateLiteral
+    TemplateLiteral: generateTemplateLiteral,
+    BigIntLiteral: ({ value }) => value,
+    DecimalLiteral: ({ value }) => value
 }
