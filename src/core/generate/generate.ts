@@ -34,7 +34,21 @@ const generator: AliasMap<PossibleAliases> = {
         const init = generate(expression.init);
         return `${left} = ${init}`;
     },
-    TemplateElement: (expression) => expression.value.raw
+    TemplateElement: (expression) => expression.value.raw,
+    // TODO: Curly braces with switch ?
+    // https://stackoverflow.com/questions/42480949/what-do-the-curly-braces-do-in-switch-statement-after-case-in-es6
+    SwitchCase: (switchCase) => {
+        const test = switchCase.test
+            ? `case ${generate(switchCase.test)}`
+            : 'default';
+    
+        const consequent = generateFromArray(
+            switchCase.consequent, 
+            ';\n        '
+        );
+        
+        return `${test}:\n        ${consequent};`;
+    }
 }
 
 export const generate = (value: PossibleAliases) => {
