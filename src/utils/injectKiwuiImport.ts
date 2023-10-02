@@ -8,7 +8,7 @@ const {
     importNamespaceSpecifier
 } = types;
 
-const injectKiwuiImport = (path: NodePath<types.JSXElement>) => {
+const injectKiwuiImport = (path: NodePath<types.JSXElement | types.JSXFragment>) => {
     // Inject import statement for the custom pragma
     const importStatement = importDeclaration(
         [importNamespaceSpecifier(identifier("Kiwui"))],
