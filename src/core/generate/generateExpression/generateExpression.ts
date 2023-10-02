@@ -25,14 +25,7 @@ export const expressionGenerator: AliasMap<types.Expression> = {
     ConditionalExpression: generateConditionalExpression,
     FunctionExpression: generateFunctionExpression,
     Identifier: (expression) => expression.name, // TODO: Should identifier be here ?
-    MemberExpression: (expression) => {
-        if (types.isIdentifier(expression.object) 
-            && types.isIdentifier(expression.property) 
-            && expression.property.name === 'index') {
-            return `${expression.object.name}[${expression.property.name}]`;
-        }
-        return generateMemberExpression(expression);
-    },
+    MemberExpression: generateMemberExpression,
     NewExpression: generateNewExpression,
     ObjectExpression: generateObjectExpression,
     // SequenceExpression: () => '',
