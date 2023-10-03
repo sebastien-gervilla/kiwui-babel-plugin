@@ -1,13 +1,13 @@
 // Types
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 
 // Generation functions
 import { generateRegExpLiteral } from "./generateRegExpLiteral";
 import { generateTemplateLiteral } from "./generateTemplateLiteral";
 
 // NOTE: All covered.
-export const literalGenerator: AliasMap<types.Literal> = {
+export const literalGenerator: GeneratorMap<types.Literal> = {
     StringLiteral: ({ value }) => `\"${value}\"`,
     NumericLiteral: ({ value }) => value.toString(),
     NullLiteral : () => 'null',

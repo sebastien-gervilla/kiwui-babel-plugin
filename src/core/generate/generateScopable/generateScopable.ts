@@ -1,6 +1,6 @@
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 
-export const generator: AliasMap<types.Scopable> = {
+export const generator: GeneratorMap<types.Scopable> = {
     
 }
