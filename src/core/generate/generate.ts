@@ -13,9 +13,10 @@ import { privateGenerator } from "./generatePrivate";
 import { jsxGenerator } from "./generateJSX";
 
 // Types
-import { AliasMap, PossibleAliases, isGenerationFunction } from "./generate.types";
+import { GeneratorMap, isGenerationFunction } from "./generate.types";
+import { Node } from "@babel/core";
 
-const generator: AliasMap<PossibleAliases> = {
+const generator: GeneratorMap<Node> = {
     ...expressionGenerator,
     ...statementGenerator,
     ...declarationGenerator,
@@ -51,7 +52,7 @@ const generator: AliasMap<PossibleAliases> = {
     }
 }
 
-export const generate = (value: PossibleAliases) => {
+export const generate = (value: Node) => {
     const generationFunction = generator[value.type];
     if (isGenerationFunction(generationFunction))
         return generationFunction(value);
@@ -62,7 +63,7 @@ export const generate = (value: PossibleAliases) => {
     );
 }
 
-export const generateFromArray = (values: PossibleAliases[], separator: string = ', ') => {
+export const generateFromArray = (values: Node[], separator: string = ', ') => {
     let stringValue = '';
     for (const value of values)
         stringValue += generate(value) + separator;

@@ -1,15 +1,15 @@
-import { types } from "@babel/core";
+import { Node } from "@babel/core";
 
-export type PossibleAliases = types.Aliases[keyof types.Aliases];
-type Generator<T extends PossibleAliases> = (scopable: T) => string;
+type Generator<T extends Node> = (node: T) => string;
 
-// TODO: At the moment it's partial (with ?) because we don't support every statement
-export type AliasMap<Alias extends PossibleAliases> = {
+// TODO: At the moment it's partial (with ?), because we don't support every node yet
+// NOTE: We sort by aliases
+export type GeneratorMap<Alias extends Node> = {
     [key in Alias["type"]]?: Generator<
         Extract<Alias, { type: key }>
     >;
 };
 
 export const isGenerationFunction = (value: any): 
-    value is Generator<PossibleAliases> => 
+    value is Generator<Node> => 
         typeof value === 'function';

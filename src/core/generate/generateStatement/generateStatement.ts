@@ -1,7 +1,7 @@
 import { generateReturnStatement } from './generateReturnStatement/generateReturnStatement';
 // Types
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 
 // Generation functions
 import { generate } from "@/core";
@@ -16,7 +16,7 @@ import { generateTryStatement } from "./generateTryStatement";
 import { generateThrowStatement } from "./generateThrowStatement";
 import { generateSwitchStatement } from "./generateSwitchStatement";
 
-export const statementGenerator: AliasMap<types.Statement> = {
+export const statementGenerator: GeneratorMap<types.Statement> = {
     ExpressionStatement: ({ expression }) => generate(expression),
     BlockStatement: generateBlockStatement,
 

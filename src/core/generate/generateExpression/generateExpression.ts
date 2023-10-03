@@ -1,6 +1,6 @@
 // Babel
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 
 import { generateAssignmentExpression } from "./generateAssignmentExpression";
 import { generateArrowFunction } from "./generateArrowFunction";
@@ -16,7 +16,7 @@ import { generateConditionalExpression } from "./generateConditionalExpression";
 import { generateUnaryExpression } from "./generateUnaryExpression";
 import { generateUpdateExpression } from "./generateUpdateExpression";
 
-export const expressionGenerator: AliasMap<types.Expression> = {
+export const expressionGenerator: GeneratorMap<types.Expression> = {
     ArrayExpression: generateArrayExpression,
     AssignmentExpression: generateAssignmentExpression,
     BinaryExpression: generateBinaryExpression,

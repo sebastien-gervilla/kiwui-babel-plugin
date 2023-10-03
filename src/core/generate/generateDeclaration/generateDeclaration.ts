@@ -1,13 +1,13 @@
 // Types
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 
 // Generation functions
 import { generate } from "@/core";
 import { generateFunctionDeclaration } from "./generateFunctionDeclaration";
 import { generateVariableDeclaration } from "./generateVariableDeclaration";
 
-export const declarationGenerator: AliasMap<types.Declaration> = {
+export const declarationGenerator: GeneratorMap<types.Declaration> = {
     FunctionDeclaration: generateFunctionDeclaration,
     VariableDeclaration: generateVariableDeclaration,
     // ClassDeclaration: () => '',

@@ -1,6 +1,6 @@
 // Types
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 import { JSX } from "@/helpers";
 
 // Generation functions
@@ -12,7 +12,7 @@ import { generateJSXSpreadAttribute } from "./generateJSXSpreadAttribute";
 import { generateJSXText } from "./generateJSXText";
 import { generateJSXFragment } from "./generateJSXFragment";
 
-export const jsxGenerator: AliasMap<types.JSX> = {
+export const jsxGenerator: GeneratorMap<types.JSX> = {
     JSXAttribute: generateJSXAttribute,
     // JSXClosingElement: () => '',
     JSXElement: generateJSXElement,

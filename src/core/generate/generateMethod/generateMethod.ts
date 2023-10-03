@@ -1,12 +1,12 @@
 // Types
 import { types } from "@babel/core";
-import { AliasMap } from "../generate.types";
+import { GeneratorMap } from "../generate.types";
 
 // Generation functions
 import { generateObjectMethod } from "./generateObjectMethod";
 import { generateClassMethod } from "./generateClassMethod";
 
-export const methodGenerator: AliasMap<types.Method> = {
+export const methodGenerator: GeneratorMap<types.Method> = {
     ClassMethod: generateClassMethod,
     ObjectMethod: generateObjectMethod
 }
