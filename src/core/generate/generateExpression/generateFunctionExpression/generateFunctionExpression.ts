@@ -3,14 +3,12 @@ import { generate, generateFromArray } from "@/core";
 
 
 export const generateFunctionExpression = (expression: types.FunctionExpression): string => {
-    const functionName = expression.id ? expression.id.name : '';
+    const name = expression.id ? expression.id.name : '';
     const params = generateFromArray(expression.params);
     const body = generate(expression.body);
 
-    return `${
-        functionName 
-            ? 'function ' + functionName 
-            : ''
-    }(${params}) ${body}`;
+    const prefixes = expression.async ? 'async ' : '';
+
+    return `${prefixes}function ${name}(${params}) ${body}`;
 };
 
