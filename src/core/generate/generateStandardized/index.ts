@@ -1,0 +1,1 @@
+export { standardizedGenerator } from './generateStandardized';
