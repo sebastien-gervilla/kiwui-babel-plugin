@@ -4,7 +4,7 @@ import { generate } from "@/core";
 export const generateTryStatement = (statement: types.TryStatement): string => {
     const tryBlock = generate(statement.block);
     const catchBlock = statement.handler ? generateCatchClause(statement.handler) : '';
-    const finallyBlock = statement.finalizer ? generateFinallyBlock(statement.finalizer) : '';
+    const finallyBlock = statement.finalizer ? generate(statement.finalizer) : '';
 
     return `try ${tryBlock} ${catchBlock} ${finallyBlock}`;
 };
@@ -15,8 +15,3 @@ export const generateCatchClause = (clause: types.CatchClause): string => {
 
     return `catch (${param}) ${catchBlock}`;
 };
-
-export const generateFinallyBlock = (block: types.BlockStatement): string => {
-    return `finally ${generate(block)}`;
-};
-
