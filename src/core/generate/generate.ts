@@ -2,6 +2,7 @@
 import { handleUnsuported } from "../../utils/handleUnsuported";
 
 // Transformation
+import { standardizedGenerator } from "./generateStandardized";
 import { expressionGenerator } from "./generateExpression";
 import { statementGenerator } from "./generateStatement";
 import { declarationGenerator } from "./generateDeclaration";
@@ -17,6 +18,7 @@ import { GeneratorMap, isGenerationFunction } from "./generate.types";
 import { Node } from "@babel/core";
 
 const generator: GeneratorMap<Node> = {
+    ...standardizedGenerator,
     ...expressionGenerator,
     ...statementGenerator,
     ...declarationGenerator,
@@ -26,7 +28,6 @@ const generator: GeneratorMap<Node> = {
     ...patternGenerator,
     ...privateGenerator,
     ...jsxGenerator,
-    SpreadElement: (expression) => `...${generate(expression.argument)}`, // TODO: Relocate This
     VariableDeclarator: (expression) => { // TODO: Relocate This
         const left = generate(expression.id)
         if (!expression.init)
@@ -35,7 +36,6 @@ const generator: GeneratorMap<Node> = {
         const init = generate(expression.init);
         return `${left} = ${init}`;
     },
-    TemplateElement: (expression) => expression.value.raw,
     // TODO: Curly braces with switch ?
     // https://stackoverflow.com/questions/42480949/what-do-the-curly-braces-do-in-switch-statement-after-case-in-es6
     SwitchCase: (switchCase) => {

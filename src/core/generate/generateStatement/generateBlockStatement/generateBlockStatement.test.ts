@@ -1,16 +1,17 @@
-import { types } from "@babel/core"
-// @ts-ignore;
-import { generate } from "@/core";
+import { types } from "@babel/core";
+import { generateBlockStatement } from "./generateBlockStatement";
+
+const runFirstTest = () => it("should generate a simple block statement", () => {
+    const blockStatement = types.blockStatement([
+        types.expressionStatement(types.stringLiteral("Statement 1")),
+        types.expressionStatement(types.stringLiteral("Statement 2")),
+    ]);
+
+    const result = generateBlockStatement(blockStatement);
+
+    expect(result).toBe(`{\n"Statement 1";\n"Statement 2";\n}`);
+});
 
 describe("generateBlockStatement", () => {
-  it("generates block statement correctly with braces", () => {
-    const stmt1 = types.expressionStatement(types.identifier("x"));
-    const stmt2 = types.expressionStatement(types.identifier("y"));
-    const block = types.blockStatement([stmt1, stmt2]);
-
-    const result = generate(block);
-
-    const expected = `{\n${generate(stmt1)};\n${generate(stmt2)};\n}`;
-    expect(result).toBe(expected);
-  });
+    runFirstTest();
 });

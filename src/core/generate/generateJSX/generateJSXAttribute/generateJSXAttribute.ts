@@ -9,5 +9,5 @@ export const generateJSXAttribute = (attribute: types.JSXAttribute) => {
         ? generate(value)
         : `${value}`;
     
-    return `"${attributeName}": ${attributeValue}`;
+    return `\"${attributeName}\": ${attributeValue}`;
 }

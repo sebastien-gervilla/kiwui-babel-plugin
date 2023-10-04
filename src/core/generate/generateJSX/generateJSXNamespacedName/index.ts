@@ -1,0 +1,1 @@
+export { generateJSXNamespacedName } from './generateJSXNamespacedName';
