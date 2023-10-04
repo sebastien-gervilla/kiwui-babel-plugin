@@ -1,4 +1,3 @@
-import { generateReturnStatement } from './generateReturnStatement/generateReturnStatement';
 // Types
 import { types } from "@babel/core";
 import { GeneratorMap } from "../generate.types";
@@ -15,6 +14,7 @@ import { generateDoWhileStatement } from "./generateDoWhileStatement";
 import { generateTryStatement } from "./generateTryStatement";
 import { generateThrowStatement } from "./generateThrowStatement";
 import { generateSwitchStatement } from "./generateSwitchStatement";
+import { generateReturnStatement } from './generateReturnStatement';
 
 export const statementGenerator: GeneratorMap<types.Statement> = {
     ExpressionStatement: ({ expression }) => generate(expression),
