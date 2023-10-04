@@ -41,8 +41,7 @@ describe("generateCallExpression", () => {
     const callee = types.identifier("myFunction");
     const arg1 = types.numericLiteral(42);
     const arg2 = types.stringLiteral("hello");
-    const placeholder = types.argumentPlaceholder();
-    const expression = types.callExpression(callee, [arg1, arg2, placeholder]);
+    const expression = types.callExpression(callee, [arg1, arg2]);
 
     const result = generateCallExpression(expression);
 

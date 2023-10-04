@@ -15,6 +15,7 @@ import { generateArrayExpression } from "./generateArrayExpression";
 import { generateConditionalExpression } from "./generateConditionalExpression";
 import { generateUnaryExpression } from "./generateUnaryExpression";
 import { generateUpdateExpression } from "./generateUpdateExpression";
+import { generateTaggedTemplateExpression } from "./generateTaggedTemplateExpression";
 
 export const expressionGenerator: GeneratorMap<types.Expression> = {
     ArrayExpression: generateArrayExpression,
@@ -37,7 +38,7 @@ export const expressionGenerator: GeneratorMap<types.Expression> = {
     // ClassExpression: () => '',
     // MetaProperty: () => '',
     // Super: () => '',
-    // TaggedTemplateExpression: () => '',
+    TaggedTemplateExpression: generateTaggedTemplateExpression,
     // YieldExpression: () => '',
     AwaitExpression: generateAwaitExpression,
     // Import: () => '',
