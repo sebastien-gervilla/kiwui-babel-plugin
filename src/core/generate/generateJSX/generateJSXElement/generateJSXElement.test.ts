@@ -113,7 +113,8 @@ const runFifthTest = () => it("should handle unsupported JSX namespaces", () => 
         []
     );
 
-    expect(() => generateJSXElement(element)).toThrowError("Namespaces are currently not supported.");
+    expect(() => generateJSXElement(element))
+        .toThrowError("Namespaces are not supported yet.\nIf you meant to render namespaced components, use Component.SubComponent.");
 });
 
 const runSixthText = () => it("should handle complex JSX attributes", () => {
