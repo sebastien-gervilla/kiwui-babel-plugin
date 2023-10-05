@@ -28,14 +28,6 @@ const generator: GeneratorMap<Node> = {
     ...patternGenerator,
     ...privateGenerator,
     ...jsxGenerator,
-    VariableDeclarator: (expression) => { // TODO: Relocate This
-        const left = generate(expression.id)
-        if (!expression.init)
-            return `${left}`;
-
-        const init = generate(expression.init);
-        return `${left} = ${init}`;
-    },
 }
 
 export const generate = (value: Node) => {
