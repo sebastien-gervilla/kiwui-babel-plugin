@@ -36,20 +36,6 @@ const generator: GeneratorMap<Node> = {
         const init = generate(expression.init);
         return `${left} = ${init}`;
     },
-    // TODO: Curly braces with switch ?
-    // https://stackoverflow.com/questions/42480949/what-do-the-curly-braces-do-in-switch-statement-after-case-in-es6
-    SwitchCase: (switchCase) => {
-        const test = switchCase.test
-            ? `case ${generate(switchCase.test)}`
-            : 'default';
-    
-        const consequent = generateFromArray(
-            switchCase.consequent, 
-            ';\n        '
-        );
-        
-        return `${test}:\n        ${consequent};`;
-    }
 }
 
 export const generate = (value: Node) => {
