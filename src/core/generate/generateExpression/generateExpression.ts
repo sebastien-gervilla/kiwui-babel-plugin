@@ -2,6 +2,8 @@
 import { types } from "@babel/core";
 import { GeneratorMap } from "../generate.types";
 
+// Generation function
+import { generate } from "@/core";
 import { generateAssignmentExpression } from "./generateAssignmentExpression";
 import { generateArrowFunction } from "./generateArrowFunction";
 import { generateCallExpression } from "./generateCallExpression";
@@ -30,7 +32,7 @@ export const expressionGenerator: GeneratorMap<types.Expression> = {
     NewExpression: generateNewExpression,
     ObjectExpression: generateObjectExpression,
     // SequenceExpression: () => '',
-    // ParenthesizedExpression: () => '',
+    ParenthesizedExpression: ({ expression }) => generate(expression),
     ThisExpression: () => 'this',
     UnaryExpression: generateUnaryExpression,
     UpdateExpression: generateUpdateExpression,
