@@ -1,0 +1,1 @@
+export { generateClassDeclaration } from './generateClassDeclaration';
