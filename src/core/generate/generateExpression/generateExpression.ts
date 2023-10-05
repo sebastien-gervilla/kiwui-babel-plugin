@@ -27,7 +27,6 @@ export const expressionGenerator: GeneratorMap<types.Expression> = {
     CallExpression: generateCallExpression,
     ConditionalExpression: generateConditionalExpression,
     FunctionExpression: generateFunctionExpression,
-    Identifier: (expression) => expression.name, // TODO: Should identifier be here ?
     MemberExpression: generateMemberExpression,
     NewExpression: generateNewExpression,
     ObjectExpression: generateObjectExpression,
@@ -44,8 +43,8 @@ export const expressionGenerator: GeneratorMap<types.Expression> = {
     // YieldExpression: () => '',
     AwaitExpression: generateAwaitExpression,
     // Import: () => '',
-    OptionalMemberExpression: () => '',
-    OptionalCallExpression: () => '',
+    // OptionalMemberExpression: () => '',
+    // OptionalCallExpression: () => '',
     // TypeCastExpression: () => '',
     // BindExpression: () => '',
     // DoExpression: () => '',

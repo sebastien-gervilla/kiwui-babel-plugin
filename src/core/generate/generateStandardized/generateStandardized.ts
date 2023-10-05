@@ -10,4 +10,5 @@ export const standardizedGenerator: GeneratorMap<types.Standardized> = {
     SpreadElement: ({ argument }) => `...${generate(argument)}`,
     TemplateElement: ({ value }) => value.raw,
     ClassBody: ({ body }) => generateFromArray(body, '\n')
+    Identifier: ({ name }) => name,
 }
