@@ -83,4 +83,20 @@ describe('generateClassMethod', () => { // TODO: generator and computed
         const result = generateClassMethod(method);
         expect(result).toBe('async asyncMethod() {\nreturn await fetchData();\n}');
     });
+
+    it('should generate an async class method', () => {
+        const key = types.privateName(types.identifier("myPrivateMethod"));
+        const method = types.classPrivateMethod(
+            "method",
+            key,
+            [],
+            types.blockStatement([
+                types.expressionStatement(types.stringLiteral("Hello, World!")),
+            ])
+        );
+
+        const result = generateClassMethod(method);
+
+        expect(result).toBe("#myPrivateMethod() {\n\"Hello, World!\";\n}");
+    });
 });

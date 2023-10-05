@@ -1,7 +1,7 @@
 import { types } from "@babel/core";
 import { generate, generateFromArray } from "@/core";
 
-export const generateClassMethod = (method: types.ClassMethod) => {
+export const generateClassMethod = (method: types.ClassMethod | types.ClassPrivateMethod) => {
     console.log("method", method);
 
     const key = generate(method.key);
@@ -11,7 +11,7 @@ export const generateClassMethod = (method: types.ClassMethod) => {
     let prefixes = method.static ? `static ` : '';
     if (method.async)
         prefixes += `async `;
-    if (method.kind !== 'method')
+    if (method.kind !== 'method' && method.kind !== 'constructor')
         prefixes += `${method.kind} `;
 
     return prefixes + `${key}(${params}) ${body}`;
