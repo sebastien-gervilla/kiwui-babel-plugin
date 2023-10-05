@@ -3,14 +3,14 @@ import { types } from "@babel/core";
 import { GeneratorMap } from "../generate.types";
 
 // Generation functions
-import { generate } from "@/core";
 import { generateFunctionDeclaration } from "./generateFunctionDeclaration";
 import { generateVariableDeclaration } from "./generateVariableDeclaration";
+import { generateClassDeclaration } from "./generateClassDeclaration";
 
 export const declarationGenerator: GeneratorMap<types.Declaration> = {
     FunctionDeclaration: generateFunctionDeclaration,
     VariableDeclaration: generateVariableDeclaration,
-    // ClassDeclaration: () => '',
+    ClassDeclaration: generateClassDeclaration,
     // ExportAllDeclaration: () => '',
     // ExportDefaultDeclaration: () => '',
     // ExportNamedDeclaration: () => '',
