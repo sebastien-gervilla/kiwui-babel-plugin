@@ -14,5 +14,6 @@ export const standardizedGenerator: GeneratorMap<types.Standardized> = {
     ClassBody: ({ body }) => generateFromArray(body, '\n'),
     Identifier: ({ name }) => name,
     SwitchCase: generateSwitchCase,
-    VariableDeclarator: generateVariableDeclarator
+    VariableDeclarator: generateVariableDeclarator,
+    Super: () => 'super'
 }
