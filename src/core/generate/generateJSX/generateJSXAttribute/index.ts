@@ -1,0 +1,1 @@
+export { generateJSXAttribute } from './generateJSXAttribute';

@@ -1,0 +1,1 @@
+export { generateClassMethod } from './generateClassMethod';

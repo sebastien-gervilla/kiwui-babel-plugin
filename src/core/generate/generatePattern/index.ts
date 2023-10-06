@@ -1,0 +1,1 @@
+export { patternGenerator } from './generatePattern';

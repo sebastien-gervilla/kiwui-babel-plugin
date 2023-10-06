@@ -1,1 +1,0 @@
-export { generatePattern } from './generatePattern';

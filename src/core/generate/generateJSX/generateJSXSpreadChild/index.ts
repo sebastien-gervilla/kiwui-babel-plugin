@@ -1,0 +1,1 @@
+export { generateJSXSpreadChild } from './generateJSXSpreadChild';

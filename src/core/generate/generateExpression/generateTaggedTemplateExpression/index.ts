@@ -1,0 +1,1 @@
+export { generateTaggedTemplateExpression } from './generateTaggedTemplateExpression';

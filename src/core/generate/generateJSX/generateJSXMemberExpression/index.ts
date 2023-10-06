@@ -1,0 +1,1 @@
+export { generateJSXMemberExpression } from './generateJSXMemberExpression';
