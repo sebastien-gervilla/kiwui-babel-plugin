@@ -7,6 +7,7 @@ import { generateObjectMethod } from "./generateObjectMethod";
 import { generateClassMethod } from "./generateClassMethod";
 
 export const methodGenerator: GeneratorMap<types.Method> = {
+    ObjectMethod: generateObjectMethod,
     ClassMethod: generateClassMethod,
-    ObjectMethod: generateObjectMethod
+    ClassPrivateMethod: generateClassMethod
 }

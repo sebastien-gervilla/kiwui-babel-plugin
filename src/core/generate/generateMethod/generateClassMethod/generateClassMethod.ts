@@ -2,8 +2,6 @@ import { types } from "@babel/core";
 import { generate, generateFromArray } from "@/core";
 
 export const generateClassMethod = (method: types.ClassMethod | types.ClassPrivateMethod) => {
-    console.log("method", method);
-
     const key = generate(method.key);
     const params = generateFromArray(method.params);
     const body = generate(method.body);
