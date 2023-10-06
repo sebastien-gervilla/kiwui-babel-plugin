@@ -6,6 +6,7 @@ import { GeneratorMap } from "../generate.types";
 import { generate } from "@/core";
 import { generateJSXAttribute } from "./generateJSXAttribute";
 import { generateJSXElement } from "./generateJSXElement";
+import { generateJSXSpreadChild } from "./generateJSXSpreadChild";
 import { generateJSXMemberExpression } from "./generateJSXMemberExpression";
 import { generateJSXNamespacedName } from "./generateJSXNamespacedName";
 import { generateJSXSpreadAttribute } from "./generateJSXSpreadAttribute";
@@ -18,7 +19,7 @@ export const jsxGenerator: GeneratorMap<types.JSX> = {
     JSXElement: generateJSXElement,
     JSXEmptyExpression: () => '', // NOTE: This helps us not rendering empty "children"
     JSXExpressionContainer: ({ expression }) => generate(expression),
-    // JSXSpreadChild: () => '',
+    JSXSpreadChild: generateJSXSpreadChild,
     JSXIdentifier: ({ name }) => name,
     JSXMemberExpression: generateJSXMemberExpression,
     JSXNamespacedName: generateJSXNamespacedName,
