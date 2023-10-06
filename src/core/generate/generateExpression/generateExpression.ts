@@ -18,6 +18,8 @@ import { generateConditionalExpression } from "./generateConditionalExpression";
 import { generateUnaryExpression } from "./generateUnaryExpression";
 import { generateUpdateExpression } from "./generateUpdateExpression";
 import { generateTaggedTemplateExpression } from "./generateTaggedTemplateExpression";
+import { generateOptionalMemberExpression } from "./generateOptionalMemberExpression";
+import { generateOptionalCallExpression } from "./generateOptionalCallExpression";
 
 export const expressionGenerator: GeneratorMap<types.Expression> = {
     ArrayExpression: generateArrayExpression,
@@ -43,8 +45,8 @@ export const expressionGenerator: GeneratorMap<types.Expression> = {
     // YieldExpression: () => '',
     AwaitExpression: generateAwaitExpression,
     // Import: () => '',
-    // OptionalMemberExpression: () => '',
-    // OptionalCallExpression: () => '',
+    OptionalMemberExpression: generateOptionalMemberExpression,
+    OptionalCallExpression: generateOptionalCallExpression,
     // TypeCastExpression: () => '',
     // BindExpression: () => '',
     // DoExpression: () => '',
