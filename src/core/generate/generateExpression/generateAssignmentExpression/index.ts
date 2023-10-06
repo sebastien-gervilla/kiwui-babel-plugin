@@ -1,0 +1,1 @@
+export { generateAssignmentExpression } from './generateAssignmentExpression';

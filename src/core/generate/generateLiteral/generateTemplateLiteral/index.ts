@@ -1,0 +1,1 @@
+export { generateTemplateLiteral } from './generateTemplateLiteral';

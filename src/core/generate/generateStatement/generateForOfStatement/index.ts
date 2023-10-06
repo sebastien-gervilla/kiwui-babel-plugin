@@ -1,0 +1,1 @@
+export { generateForOfStatement } from './generateForOfStatement';
