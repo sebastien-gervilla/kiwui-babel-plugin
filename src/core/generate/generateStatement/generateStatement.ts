@@ -17,6 +17,7 @@ import { generateSwitchStatement } from "./generateSwitchStatement";
 import { generateReturnStatement } from './generateReturnStatement';
 
 export const statementGenerator: GeneratorMap<types.Statement> = {
+    EmptyStatement: () => '', // It's ";"
     ExpressionStatement: ({ expression }) => generate(expression),
     BlockStatement: generateBlockStatement,
 
