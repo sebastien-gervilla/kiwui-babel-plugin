@@ -33,7 +33,7 @@ export const expressionGenerator: GeneratorMap<types.Expression> = {
     NewExpression: generateNewExpression,
     ObjectExpression: generateObjectExpression,
     // SequenceExpression: () => '',
-    ParenthesizedExpression: ({ expression }) => generate(expression),
+    ParenthesizedExpression: ({ expression }) => `(${generate(expression)})`,
     ThisExpression: () => 'this',
     UnaryExpression: generateUnaryExpression,
     UpdateExpression: generateUpdateExpression,
