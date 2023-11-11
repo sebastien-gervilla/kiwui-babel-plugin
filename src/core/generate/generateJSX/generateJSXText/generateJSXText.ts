@@ -2,9 +2,10 @@ import { JSX } from "@/helpers"
 import { types } from "@babel/core"
 
 export const generateJSXText = (text: types.JSXText) => {
-    const purified = JSX.purifyJSXText(text.value);
+    
+    const purified = JSX.purifyJSXText(text);
     return purified
-        ? `\"${purified}\"`
+        ? `"${purified}"`
         : '';
 }
 
