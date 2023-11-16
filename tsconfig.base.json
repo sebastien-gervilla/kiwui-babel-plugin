@@ -10,7 +10,7 @@
         "baseUrl": "./src",
         "rootDir": "./src",
 
-        "lib": ["esnext"],
+        "lib": ["esnext", "dom"],
         "types": ["node"],
         "moduleResolution": "node",
         "esModuleInterop": true,
