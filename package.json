@@ -1,6 +1,6 @@
 {
   "name": "kiwui-babel-plugin",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Kiwui's JSX transformation Babel plugin",
   "author": "Sébastien Gervilla (sebastien-gervilla)",
   "license": "ISC",

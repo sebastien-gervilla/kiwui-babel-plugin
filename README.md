@@ -1,6 +1,6 @@
 # kiwui-babel-plugin
 
-This Babel plugin is designed to transform code written in Kiwui into standard JavaScript. Kiwui is a specialized pacakge that this Babel plugin can understand and convert into JavaScript, enabling seamless integration of Kiwui into existing JavaScript projects.
+This Babel plugin is designed to transform code written in Kiwui's JSX into standard JavaScript. Kiwui's JSX is a specialized language that this Babel plugin can understand and convert into JavaScript, enabling seamless integration of Kiwui's JSX into existing JavaScript projects.
 
 
 ## Installation
