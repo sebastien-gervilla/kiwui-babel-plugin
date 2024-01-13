@@ -6,7 +6,11 @@ export const generateClassDeclaration = (declaration: types.ClassDeclaration) =>
         ? `extends ${generate(declaration.superClass)} ` 
         : '';
 
+    const className = declaration.id
+        ? declaration.id.name 
+        : '';
+
     const body = generate(declaration.body);
 
-    return `class ${declaration.id.name} ${superClass}{\n${body}\n}`;
+    return `class ${className} ${superClass}{\n${body}\n}`;
 }

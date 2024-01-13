@@ -5,5 +5,5 @@ export const generateConditionalExpression = (expression : types.ConditionalExpr
     const test = generate(expression.test);
     const consequent = generate(expression.consequent);
     const alternate = generate(expression.alternate);
-    return `${test} ? ${consequent} : ${alternate}`;
+    return `(${test} ? ${consequent} : ${alternate})`;
 }

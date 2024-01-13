@@ -12,6 +12,7 @@ import { propertyGenerator } from "./generateProperty";
 import { patternGenerator } from "./generatePattern";
 import { privateGenerator } from "./generatePrivate";
 import { jsxGenerator } from "./generateJSX";
+import { typescriptGenerator } from "./generateTypescript";
 
 // Types
 import { GeneratorMap, isGenerationFunction } from "./generate.types";
@@ -28,6 +29,7 @@ const generator: GeneratorMap<Node> = {
     ...patternGenerator,
     ...privateGenerator,
     ...jsxGenerator,
+    ...typescriptGenerator
 }
 
 export const generate = (value: Node) => {
