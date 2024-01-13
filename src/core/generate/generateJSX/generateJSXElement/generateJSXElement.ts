@@ -23,7 +23,7 @@ export const generateJSXElement = (element: types.JSXElement): string => {
 const getTypeFromIdentifier = ({ name }: types.JSXIdentifier) => {
     return isFirstCharacterUppercase(name)
         ? `${name}` 
-        : `"${name}"`;
+        : `\"${name}\"`;
 }
 
 const getCreateFunction = (type: string, attributes: string, children: string | null) => {

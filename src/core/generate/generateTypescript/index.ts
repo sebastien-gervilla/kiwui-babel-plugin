@@ -1,0 +1,1 @@
+export { typescriptGenerator } from './generateTypescript';
